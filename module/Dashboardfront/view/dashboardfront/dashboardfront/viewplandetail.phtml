@@ -1,0 +1,97 @@
+
+<!-- Page content -->
+<div id="page-content">
+    <!-- Forms Components Header -->
+    <div class="content-header">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="header-section">
+                    <h1>Plan Details</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Forms Components Header -->
+
+    <!-- Form Components Row -->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Horizontal Form Block -->
+<?php
+       
+ 
+?>
+            <div class="block">
+                <!-- General Elements Content -->
+                <form action="plans.php" method="get" class="form-horizontal form-bordered">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Name</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo $plan_r[0]['plan_name'];?></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Individual Price (Monthly / Annually)</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo $plan_r[0]['plan_monthly_price'].' / '.$plan_r[0]['plan_yearly_price'];?></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Addon Price (Monthly / Annually)</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo $plan_r[0]['addon_monthly_price'].' / '.$plan_r[0]['addon_yearly_price'];?></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Services</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php 
+// get service plans
+                              listplanservice
+
+    foreach($listplanservice as $listplanservicevalue)
+    {
+        if($listplanservicevalue['plan_id']== $plan_r[0]['plan_id']){
+            
+        }
+    }
+    /*                          
+$service_plan_qry = mysqli_query($cn,"select * from plan_services where plan_id=".mysqli_real_escape_string($cn,$plan_r->plan_id));
+if(mysqli_num_rows($service_plan_qry)) {
+    while($service_plan_r = mysqli_fetch_object($service_plan_qry)) {
+        echo '<b>'.$service_plan_r->service_type.'</b><br />';
+        for($i=1;$i<=10;$i++) {
+        $servicefield = 'service_name'.$i;
+            if(trim($service_plan_r->$servicefield)) {
+                echo stripslashes($service_plan_r->$servicefield).'<br>';
+            }
+        }
+        echo '<i>'.stripslashes($service_plan_r->service_notes).'</i><br>';
+    }
+}
+*/
+?></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Heading Line</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo $plan_r['heading_line'];?></p>
+                        </div>
+                    </div>
+                    <div class="form-group form-actions">
+                        <div class="col-md-9 col-md-offset-3">
+                            <button type="submit" class="btn btn-effect-ripple btn-primary">Back</button>
+                        </div>
+                    </div>
+                    </form>
+                <!-- END General Elements Content -->
+            </div>
+        
+    </div>
+    <!-- END Form Components Row -->
+</div>
+<!-- END Page Content -->
+
+<!-- END Page Content -->
+

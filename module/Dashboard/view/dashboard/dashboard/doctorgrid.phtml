@@ -1,0 +1,73 @@
+<!-- Page content -->
+<div id="page-content">
+    <!-- Table Styles Header -->
+    <div class="content-header">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="header-section">
+                    <h1>Doctors&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small>Active: <?php echo $activeDocNo;?></small>&nbsp;&nbsp;&nbsp;<small>Inactive: <?php echo $inactiveDocNo;?></small></h1> 
+                </div>
+            </div>
+            <div class="col-sm-6 hidden-xs">
+                <div class="header-section">
+                    <ul class="breadcrumb breadcrumb-top">
+                    <li><a href="<?php  echo $this->url('dashboard',array('action'=>'doctoradd')) ; ?>" class="btn btn-effect-ripple btn-primary" data-toggle="tooltip" data-placement="left" title="" style="overflow: hidden; position: relative;" data-original-title="Add new Doctor"><!--<i class="fa fa-plus"></i>-->Add new Doctor</a>
+                   </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    <div class="text-center border-top push-inner-top-bottom">
+            <a href="<?php echo $this->url('dashboard',array('action'=>'doctorgrid'));?>" class="btn btn-sm btn-success" data-toggle="modal"><i class="fa fa-plus"></i></a>
+            <a href="<?php echo $this->url('dashboard',array('action'=>'doctorgrid','id'=>'97')) ; ?>" class="btn btn-sm btn-default">A</a>
+            <a href="<?php echo $this->url('dashboard',array('action'=>'doctorgrid','id'=>'98'));?>" class="btn btn-sm btn-default">B</a>
+            <a href="<?php echo $this->url('dashboard',array('action'=>'doctorgrid','id'=>'99'));?>" class="btn btn-sm btn-default">C</a>
+            <a href="<?php echo $this->url('dashboard',array('action'=>'doctorgrid','id'=>'100'));?>" class="btn btn-sm btn-default">D</a>
+            <a href="<?php echo $this->url('dashboard',array('action'=>'doctorgrid','id'=>'101'));?>" class="btn btn-sm btn-default">E</a>
+            <a href="<?php echo $this->url('dashboard',array('action'=>'doctorgrid','id'=>'102'));?>" class="btn btn-sm btn-default">F</a>
+            <a href="<?php echo $this->url('dashboard',array('action'=>'doctorgrid','id'=>'103'));?>" class="btn btn-sm btn-default">G</a>
+            <a href="<?php echo $this->url('dashboard',array('action'=>'doctorgrid','id'=>'104'));?>" class="btn btn-sm btn-default">H</a>
+            <a href="<?php echo $this->url('dashboard',array('action'=>'doctorgrid','id'=>'105'));?>" class="btn btn-sm btn-default">I</a>
+            <a href="<?php echo $this->url('dashboard',array('action'=>'doctorgrid','id'=>'106'));?>" class="btn btn-sm btn-default">J</a>
+            <a href="<?php echo $this->url('dashboard',array('action'=>'doctorgrid','id'=>'107'));?>" class="btn btn-sm btn-default">K</a>
+            <a href="<?php echo $this->url('dashboard',array('action'=>'doctorgrid','id'=>'108'));?>" class="btn btn-sm btn-default">L</a>
+            <a href="<?php echo $this->url('dashboard',array('action'=>'doctorgrid','id'=>'109'));?>" class="btn btn-sm btn-default">M</a>
+            <a href="<?php echo $this->url('dashboard',array('action'=>'doctorgrid','id'=>'110'));?>" class="btn btn-sm btn-default">N</a>
+            <a href="<?php echo $this->url('dashboard',array('action'=>'doctorgrid','id'=>'111'));?>" class="btn btn-sm btn-default">O</a>
+            <a href="<?php echo $this->url('dashboard',array('action'=>'doctorgrid','id'=>'112'));?>" class="btn btn-sm btn-default">P</a>
+            <a href="<?php echo $this->url('dashboard',array('action'=>'doctorgrid','id'=>'113'));?>" class="btn btn-sm btn-default">Q</a>
+            <a href="<?php echo $this->url('dashboard',array('action'=>'doctorgrid','id'=>'114'));?>" class="btn btn-sm btn-default">R</a>
+            <a href="<?php echo $this->url('dashboard',array('action'=>'doctorgrid','id'=>'115'));?>" class="btn btn-sm btn-default">S</a>
+            <a href="<?php echo $this->url('dashboard',array('action'=>'doctorgrid','id'=>'116'));?>" class="btn btn-sm btn-default">T</a>
+            <a href="<?php echo $this->url('dashboard',array('action'=>'doctorgrid','id'=>'117'));?>" class="btn btn-sm btn-default">V</a>
+            <a href="<?php echo $this->url('dashboard',array('action'=>'doctorgrid','id'=>'118'));?>" class="btn btn-sm btn-default">U</a>
+            <a href="<?php echo $this->url('dashboard',array('action'=>'doctorgrid','id'=>'119'));?>" class="btn btn-sm btn-default">W</a>
+            <a href="<?php echo $this->url('dashboard',array('action'=>'doctorgrid','id'=>'120'));?>" class="btn btn-sm btn-default">X</a>
+            <a href="<?php echo $this->url('dashboard',array('action'=>'doctorgrid','id'=>'121'));?>" class="btn btn-sm btn-default">Y</a>
+            <a href="<?php echo $this->url('dashboard',array('action'=>'doctorgrid','id'=>'122'));?>" class="btn btn-sm btn-default">Z</a>
+        </div>
+    </div>
+    <!-- END Table Styles Header -->
+    <div class="row">
+<?php
+  $specialist_arr[1] = 'Dentist';
+  $specialist_arr[2] = 'Pediatric Dentists';
+  $specialist_arr[3] = 'Specialist';
+  $doc_avatar_dir = "/img/placeholders/avatars/";
+  foreach($doctorgrid as $doctorgridname=>$doctorgridvalue) { 
+    ?>
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <a href="<?php echo $this->url('dashboard',array('action'=>'doctordetailsgrid','id'=>$doctorgridvalue['doc_id'])) ;?>" class="widget">
+                <div class="widget-content text-right clearfix">
+                    <img src="<?php echo (trim($doctorgridvalue['doc_avatar'])!='') ? $doc_avatar_dir.$doctorgridvalue['doc_avatar'] : '/img/placeholders/avatars/avatar9.jpg';?>" alt="avatar" class="img-circle img-thumbnail img-thumbnail-avatar pull-left">
+                    <h3 class="widget-heading h4"><strong><?php echo $doctorgridvalue['doc_firstname'].' '.$doctorgridvalue['doc_lastname'];?></strong></h3>
+                    <span class="text-muted"><?php echo @$specialist_arr[$doctorgridvalue['doc_speciality']];?></span>
+                </div>
+            </a>
+        </div>
+<?php } ?>
+    </div>
+    <!-- END Datatables Block -->
+</div>
+<!-- END Page Content -->

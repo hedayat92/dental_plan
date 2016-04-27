@@ -1,0 +1,86 @@
+<style>
+.errortext { text-align:center; font-weight:bold; color:red; background:rgba(218, 224, 232, 0.15) none repeat scroll 0 0; }
+body {
+    font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #454e59;
+    background-color: #003f6a;
+}
+</style>
+<!-- Login Container -->
+<div id="login-container">
+    <!-- Reminder Header -->
+    <h1 class="h2 text-light text-center push-top-bottom animation-slideDown">
+        <img src="/front_img/logo2.png" /><!--<i class="fa fa-cube"></i> <strong>Welcome to Dental Plans</strong>-->
+    </h1>
+    <!-- END Reminder Header -->
+
+
+	<div class="errortext"><?php  if($err==1){echo "Invalid Email ID"; }else if($err==2){echo "No Record present with given details" ;}else if($err==3){ echo "Password reset successfully"; } ?> </div>
+    <!-- Reminder Block -->
+    <div class="block animation-fadeInQuickInv">
+        <!-- Reminder Title -->
+        <div class="block-title">
+            <div class="block-options pull-right">
+                <a href="/admin/1" class="btn btn-effect-ripple btn-primary" data-toggle="tooltip" data-placement="left" title="Back to login"><i class="fa fa-user"></i></a>
+            </div>
+            <h2>Password Reminder</h2>
+        </div>
+        <!-- END Reminder Title -->
+
+        <!-- Reminder Form -->
+        <form id="form-reminder" action="/forgetpass" method="post" class="form-horizontal">
+            <div class="form-group">
+                <div class="col-xs-12">
+                    <input type="text" id="reminder-email" name="reminder-email" class="form-control" placeholder="Enter your email..">
+                </div>
+            </div>
+            <div class="form-group form-actions">
+                <div class="col-xs-12 text-right">
+                    <button type="submit" class="btn btn-effect-ripple btn-sm btn-primary"><i class="fa fa-check"></i> Remind Password</button>
+                </div>
+            </div>
+        </form>
+        <!-- END Reminder Form -->
+    </div>
+    <!-- END Reminder Block -->
+
+    <!-- Footer -->
+    <!--<footer class="text-muted text-center animation-pullUp">
+        <small><span id="year-copy"></span> &copy; <a href="http://goo.gl/RcsdAh" target="_blank"><?php //echo $template['name'] . ' ' . $template['version']; ?></a></small>
+    </footer>-->
+    <!-- END Footer -->
+</div>
+<!-- END Login Container -->
+
+
+<script src="/js/pages/formsComponents.js"></script>
+<!-- Load and execute javascript code used only in this page -->
+<script src="/js/pages/readyReminder.js"></script>
+<script>$(function(){ ReadyReminder.init(); });</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

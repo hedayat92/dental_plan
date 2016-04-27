@@ -1,0 +1,218 @@
+
+<div class="row">
+   <?php 
+
+if ($this->flashMessenger()->hasMessages()) {
+    echo '<div class="alert alert-info">';
+    $messages = $this->flashMessenger()->getMessages();
+    foreach($messages as $message) {
+        echo $message;
+    }
+  echo '</div>';
+}
+
+?>
+</div>
+
+<!-- Page content -->
+<div id="page-content">
+    <!-- Forms Components Header -->
+    <div class="content-header">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="header-section">
+                    <h1>Patient Details</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Forms Components Header -->
+
+    <!-- Form Components Row -->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Horizontal Form Block -->
+<?php 
+// gender type
+$sex[1] = 'Male';
+$sex[2] = 'Female';
+// plan type
+$plan_type[1] = 'Individual';
+$plan_type[2] = 'Family';
+$plan_type[3] = 'Addon';
+// plan cycle
+$plan_billing_cycle[1] = 'Monthly';
+$plan_billing_cycle[2] = 'Annually';
+
+
+?>
+            <div class="block">
+                <!-- General Elements Content -->
+                <form action="" method="get" class="form-horizontal form-bordered" onsubmit="return false">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Email</label>
+                        <div class="col-md-9">
+                    <p class="form-control-static"><?php echo $listPatientForDocPatient[0]['patient_email'];?></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Name</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php  echo $listPatientForDocPatient[0]['patient_firstname'].' '.$listPatientForDocPatient[0]['patient_lastname'];?></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">DOB (Age)</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo $listPatientForDocPatient[0]['patient_dob'];?></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Last 4 digits of SSN</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo $listPatientForDocPatient[0]['patient_ssn'];?></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Sex</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo $sex[$listPatientForDocPatient[0]['patient_sex']];?></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Address</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo stripslashes($listPatientForDocPatient[0]['patient_address']);?></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Zip</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo $listPatientForDocPatient[0]['patient_zip'];?></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Phone</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo $listPatientForDocPatient[0]['patient_phone'];?></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Mobile</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo $listPatientForDocPatient[0]['patient_mobile'];?></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Family Info</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo stripslashes($listPatientForDocPatient[0]['patient_family_info']);?></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Last Procedure Info</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo stripslashes($listPatientForDocPatient[0]['patient_lastprocedure_info']);?></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Plan Name</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo $listPatientForDocPatient[0]['plan_name'];?></p>
+                        </div>
+                    </div>
+<?php
+// chk plan type
+        $i=0;
+                $chk_plan_type_r=array();
+               foreach($listPatients as $listPatientsIdkey => $listPatientsIdvalue)
+               { 
+                 if($listPatientsIdvalue['parent_id']==$listPatientForDocPatient[0]['patient_id'])
+                 {
+                  $chk_plan_type_r[$i++]=$listPatientsIdvalue['patient_id'];
+                 }
+               }
+               $countchk_plan_type_r   = count($chk_plan_type_r);
+               if($countchk_plan_type_r>0)
+               {
+                $plantype = $plan_type[2]; 
+               }
+if($listPatientForDocPatient[0]['parent_id']>0) {
+    $plantype = $plan_type[3];
+}
+if(!$plantype)
+$plantype = $plan_type[1];
+
+?>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Plan Type</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo $plantype;?></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Plan Cycle</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo $plan_billing_cycle[$listPatientForDocPatient[0]['plan_cycle']];?></p>
+                        </div>
+                    </div>
+<?php
+                    $labels['0']['class'] = "label-danger";
+                    $labels['0']['text'] = "Inactive";
+                    $labels['1']['class'] = "label-success";
+                    $labels['1']['text'] = "Active";
+?>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Status</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo $labels[$listPatientForDocPatient[0]['patient_status']]['text'];?></p>
+                        </div>
+                    </div>
+                    <div class="form-group form-actions">
+                        <div class="col-md-9 col-md-offset-3">
+                            <button type="submit" class="btn btn-effect-ripple btn-primary" onclick="javascript: window.location.assign('listpatients.php?doc_id=<?php echo $_GET['doc_id'];?>')">Back</button>
+                        </div>
+                    </div>
+					</form>
+                <!-- END General Elements Content -->
+            </div>
+        
+    </div>
+    <!-- END Form Components Row -->
+</div>
+<!-- END Page Content -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

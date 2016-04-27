@@ -1,0 +1,63 @@
+<?php
+
+$title = 'My Dashboard';
+//$this->headTitle($title);
+//<!DOCTYPE HTML>
+
+?>
+<div style="width:100%;">
+</div>
+
+<script type="text/javascript">
+
+window.onload = function() {
+//viz.dispose();
+var placeholderDiv = document.getElementById("tableauViz");
+
+console.log(placeholderDiv.innerHTML)
+  
+
+var url = "http://54.175.39.22/trusted/<?php echo $tokenno; ?>/views/<?php echo $reportdetail['0']['permission_url'] ; ?>?embed=yes&:display_share=no&:tabs=no&:toolbar=yes&:customViews=no";
+//alert(url);
+//var url = "http://54.165.228.118/views/SalesReport-TotalNO_ofSales/Dashboard-SalesReport?embed=yes&:tabs=no&:toolbar=no&:customViews=no&:display_share=no";
+var options = {
+width: placeholderDiv.offsetWidth,
+height: placeholderDiv.offsetHeight,
+hideTabs: false,
+hideToolbar: false,
+onFirstInteractive: function() {
+
+workbook = viz.getWorkbook();
+
+activeSheet = workbook.getActiveSheet();
+
+}
+
+};
+
+console.log(options)
+
+viz = new tableauSoftware.Viz(placeholderDiv, url, options);
+
+};
+
+</script>
+
+
+
+
+
+
+
+<div id="tableauViz" class="fire" style="width:100%; height:1130px; margin-left:27%; visibility:visible;"\"></div>
+
+
+
+
+
+
+
+
+
+
+

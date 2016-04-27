@@ -1,0 +1,99 @@
+<!-- Page content -->
+<div id="page-content">
+    <!-- Forms Components Header -->
+    <div class="content-header">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="header-section">
+                    <h1>Support</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+   
+        <div class="row">
+         <?php if($success) { ?>
+            <div class="col-sm-12">
+                <div class="alert alert-success alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+                        <h4><strong>Success</strong></h4>
+                        <p>Message sent successfully!</p>
+                </div>
+            </div>
+             <?php } ?>
+        </div>
+   
+
+
+    <!-- END Forms Components Header -->
+
+    <!-- Form Components Row -->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Horizontal Form Block -->
+            <div class="block">
+                <!-- General Elements Content -->
+                <form action="<?php echo $this->url('dashboardfront', array('action' => 'doctorsupport')) ?>" method="post" class="form-horizontal form-bordered">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Email</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static">admin@dentalplansoftware.com</p>
+                        </div>
+                        <label class="col-md-3 control-label">Phone</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static">0123456789</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-text-input">First Name</label>
+                        <div class="col-md-6">
+                            <input type="text" id="first_name" name="first_name" class="form-control" placeholder="Your First Name" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-text-input">Last Name</label>
+                        <div class="col-md-6">
+                            <input type="text" id="last_name" name="last_name" class="form-control" placeholder="Your Last Name" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-text-input">Email</label>
+                        <div class="col-md-6">
+                            <input type="text" id="email_id" name="email_id" class="form-control" placeholder="Your Email ID" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-text-input">Address</label>
+                        <div class="col-md-6">
+                            <textarea cols="80" rows="5" id="address" name="address" class="form-control" placeholder="Your Address"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-text-input">Phone</label>
+                        <div class="col-md-6">
+                            <input type="text" id="phone" name="phone" class="form-control" placeholder="Your Phone" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-text-input">Query / Suggestion</label>
+                        <div class="col-md-6">
+                            <textarea cols="80" rows="5" id="message" name="message" class="form-control" placeholder="Message"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group form-actions">
+                        <div class="col-md-9 col-md-offset-3">
+                            <button type="submit" class="btn btn-effect-ripple btn-primary">Submit</button>
+                            <button type="reset" class="btn btn-effect-ripple btn-danger" onclick="javascript: window.location.assign('/logout')">Cancel</button>
+                        </div>
+                    </div>
+                <input type="hidden" name="pid" value="<?php echo $_GET['plan_id'];?>" />
+                </form>
+                <!-- END General Elements Content -->
+
+            </div>
+        
+    </div>
+    <!-- END Form Components Row -->
+</div>
+<!-- END Page Content -->

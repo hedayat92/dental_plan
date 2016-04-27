@@ -1,0 +1,54 @@
+
+<div class="row">
+
+   <?php 
+   /*
+if ($this->flashMessenger()->hasMessages()) {
+    echo '<div class="alert alert-info">';
+    $messages = $this->flashMessenger()->getMessages();
+    foreach($messages as $message) {
+        echo $message;
+    }
+  echo '</div>';
+}
+ */
+?>
+</div>
+<div class="row">
+	<div class="animate form">
+		<div class="panel panel-default">
+			
+				<h1 style="color:#1B75BA;width:33%; margin-top:70px;">Permission Adding Form</h1>
+			
+			<div class="panel-body">
+    <?php
+    $form->setAttribute('action', $this->url('dashboard', array('action' => 'addpermission')));
+    $form->prepare();
+    echo $this->form()->openTag($form);
+    ?>
+                	<table>
+                     <tr>
+                        <td><?php echo $this->formlabel($form->get('role_id'));?></td>
+                        <td><?php echo $this->formElement($form->get('role_id')); ?>
+                        <span class="common-error-msg"><?php echo $this->formElementErrors($form->get('role_id'));?></span></td>
+                    </tr>
+                    <tr>
+						<td><?php echo $this->formlabel($form->get('permission'));?></td>
+						<td><?php echo $this->formElement($form->get('permission')); ?>
+                        <span class="common-error-msg"><?php echo $this->formElementErrors($form->get('permission'));?></span></td>
+					</tr>
+					
+					<tr>
+						<td>&nbsp;</td>
+						<td>
+                            <?php
+                           
+                            echo $this->formElement($form->get('submit'));
+                            ?>
+                            </td>
+					</tr>
+				</table>
+                <?php
+                echo $this->form()->closeTag($form);
+                ?>
+            </div>

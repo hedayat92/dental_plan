@@ -1,0 +1,115 @@
+<?php echo $this->doctype(); 
+use Zend\Session\Container;
+$session = new Container('User');
+$userdatails =array();
+$docdetails= $session->offsetGet('userdetail');
+?>
+<!-- Page content -->
+<div id="page-content">
+    <!-- First Row -->
+    <div class="row">
+        <!-- Simple Stats Widgets -->
+<?php if($docdetails['doc_speciality']>2) { ?>
+        <div class="col-sm-6 col-lg-4">
+            <a href="javascript:void(0)" class="widget">
+                <div class="widget-content widget-content-mini text-right clearfix">
+                    <div class="widget-icon pull-left themed-background">
+                        <i class="gi gi-cardio text-light-op"></i>
+                    </div>
+                    <h2 class="widget-heading h3">
+                        <strong><span data-toggle="counter" data-to="<?=$totalref?>"></span></strong>
+                    </h2>
+                    <span class="text-muted">TOTAL REFERRALS</span>
+                </div>
+            </a>
+        </div>
+        <div class="col-sm-6 col-lg-4">
+            <a href="javascript:void(0)" class="widget">
+                <div class="widget-content widget-content-mini text-right clearfix">
+                    <div class="widget-icon pull-left themed-background-warning">
+                        <i class="gi gi-briefcase text-light-op"></i>
+                    </div>
+                    <h2 class="widget-heading h3 text-warning">
+                        <strong><span data-toggle="counter" data-to="<?=$totalref_accepted?>"></span></strong>
+                    </h2>
+                    <span class="text-muted">REFERRALS ACCEPTED</span>
+                </div>
+            </a>
+        </div>
+        <div class="col-sm-6 col-lg-4">
+            <a href="javascript:void(0)" class="widget">
+                <div class="widget-content widget-content-mini text-right clearfix">
+                    <div class="widget-icon pull-left themed-background-danger">
+                        <i class="gi gi-wallet text-light-op"></i>
+                    </div>
+                    <h2 class="widget-heading h3 text-danger">
+                        <strong><span data-toggle="counter" data-to="<?=$totalref_rejected?>"></span></strong>
+                    </h2>
+                    <span class="text-muted">REFERRALS REJECTED</span>
+                </div>
+            </a>
+        </div>
+        <div class="col-sm-6 col-lg-4">
+            <a href="spl_services.php" class="widget">
+                <div class="widget-content widget-content-mini text-right clearfix">
+                    <div class="widget-icon pull-left themed-background-danger">
+                        <i class="gi gi-wallet text-light-op"></i>
+                    </div>
+                    <h2 class="widget-heading h3 text-danger">
+                    </h2>
+                    <span class="text-muted">ADD SERVICE</span>
+                </div>
+            </a>
+        </div>
+<?php } else { ?>
+        <div class="col-sm-6 col-lg-4">
+            <a href="/dashboardfront/patient" class="widget">
+                <div class="widget-content widget-content-mini text-right clearfix">
+                    <div class="widget-icon pull-left themed-background">
+                        <i class="gi gi-cardio text-light-op"></i>
+                    </div>
+                    <h2 class="widget-heading h3">
+            <strong><span data-toggle="counter" data-to="<?php echo $total_pat ;?>"></span></strong>
+                    </h2>
+                    <span class="text-muted">PATIENTS</span>
+                </div>
+            </a>
+        </div>
+        <div class="col-sm-6 col-lg-4">
+            <a href="/dashboardfront/reports" class="widget">
+                <div class="widget-content widget-content-mini text-right clearfix">
+                    <div class="widget-icon pull-left themed-background-warning">
+                        <i class="gi gi-briefcase text-light-op"></i>
+                    </div>
+                    <h2 class="widget-heading h3 text-warning">
+                        <strong>$ <span data-toggle="counter" data-to="<?= $total_income?>"></span></strong>
+                    </h2>
+                    <span class="text-muted">TOTAL REVENUE FOR THE MONTH</span>
+                </div>
+            </a>
+        </div>
+        <div class="col-sm-6 col-lg-4">
+            <a href="/dashboardfront/reports" class="widget">
+                <div class="widget-content widget-content-mini text-right clearfix">
+                    <div class="widget-icon pull-left themed-background-danger">
+                        <i class="gi gi-wallet text-light-op"></i>
+                    </div>
+                    <h2 class="widget-heading h3 text-danger">
+                        <strong>$ <span data-toggle="counter" data-to="<?=$net_income?>"></span></strong>
+                    </h2>
+                    <span class="text-muted">NET INCOME FOR THE MONTH</span>
+                </div>
+            </a>
+        </div>
+<?php 
+} 
+?>
+        <!-- END Simple Stats Widgets -->
+    </div>
+    <!-- END First Row -->
+<?php /* ?>
+
+    <!-- END Third Row -->
+<?php */?>
+</div>
+<!-- END Page Content -->

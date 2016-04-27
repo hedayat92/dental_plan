@@ -1,0 +1,90 @@
+<?php
+if($_POST) {
+	extract($_POST);
+if (!filter_var($admin_user, FILTER_VALIDATE_EMAIL)) {
+  $errmsg = "Invalid Email ID";
+	$err = 1;
+} else if($admin_user!=$admin_cuser) {
+	$errmsg = 'New Username and confirm username should be same';
+	$err = 1;
+}
+if(!$err) {
+	$update_qry = "update admin_users set admin_username='".mysqli_real_escape_string($cn,$admin_user)."' where admin_userid=".mysqli_real_escape_string($cn,$_SESSION['adminUserID']);
+	mysqli_query($cn,$update_qry);
+$msg=1;
+}
+}
+
+?>
+
+<!-- Page content -->
+<div id="page-content" style="padding-top:0px;">
+    <!-- Forms Components Header -->
+    <div class="content-header">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="header-section">
+                    <h1>Change Username</h1>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <!-- END Forms Components Header -->
+
+    <!-- Form Components Row -->
+    <div class="row">
+<?php if($msg==1) { ?>
+	<div class="col-md-12">
+		<!-- Success Alert -->
+		<div class="alert alert-success alert-dismissable">
+			<button aria-hidden="true" data-dismiss="alert" class="close" type="button">x</button>
+			<h4><strong>Success</strong></h4>
+			<p>Username Changed</p>
+		</div>
+		<!-- END Success Alert -->
+	</div>
+<?php } elseif($err==1) { ?>
+	<div class="col-md-12">
+		<!-- Success Alert -->
+		<div class="alert alert-danger alert-dismissable">
+			<button aria-hidden="true" data-dismiss="alert" class="close" type="button">x</button>
+			<h4><strong>Error</strong></h4>
+			<p><?php echo $errmsg;?></p>
+		</div>
+		<!-- END Success Alert -->
+	</div>
+<?php } ?>
+        <div class="col-md-12">
+            <!-- Horizontal Form Block -->
+            <div class="block">
+                <!-- General Elements Content -->
+                <form action="/dashboard/changeusername" method="post" class="form-horizontal form-bordered">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-text-input">Email ID as Username</label>
+                        <div class="col-md-6">
+                            <input type="text" id="admin_user" name="admin_user" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-text-input">Confirm Username</label>
+                        <div class="col-md-6">
+                            <input type="text" id="admin_cuser" name="admin_cuser" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group form-actions">
+                        <div class="col-md-9 col-md-offset-3">
+                            <button type="submit" class="btn btn-effect-ripple btn-primary">Submit</button>
+                            <button type="reset" class="btn btn-effect-ripple btn-danger" onclick="javascript: window.location.assign('index.php')">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+                <!-- END General Elements Content -->
+            </div>
+        
+    </div>
+    <!-- END Form Components Row -->
+</div>
+<!-- END Page Content -->
+
+

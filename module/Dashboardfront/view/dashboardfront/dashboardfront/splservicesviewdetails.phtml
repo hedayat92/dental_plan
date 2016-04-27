@@ -1,0 +1,66 @@
+<!-- Page content -->
+<div id="page-content">
+    <!-- Forms Components Header -->
+    <div class="content-header">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="header-section">
+                    <h1>Service Details</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Forms Components Header -->
+
+    <!-- Form Components Row -->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Horizontal Form Block -->
+<?php
+        $spls_r = $spl_servicedetails[0];
+?>
+            <div class="block">
+                <!-- General Elements Content -->
+                <form action="/dashboardfront/splservices" method="get" class="form-horizontal form-bordered">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Service Name</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo $spls_r['service_type'];?></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Price</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo $spls_r['price'];?></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Services</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php 
+// get service
+
+   
+        for($i=1;$i<=10;$i++) {
+        $servicefield = 'service_name'.$i;
+            if($spls_r['service_name'.$i]) {
+                echo $spls_r['service_name'.$i].'<br>';
+            }
+        }
+
+?></p>
+                        </div>
+                    </div>
+                    <div class="form-group form-actions">
+                        <div class="col-md-9 col-md-offset-3">
+                            <button type="submit" class="btn btn-effect-ripple btn-primary">Back</button>
+                        </div>
+                    </div>
+                    </form>
+                <!-- END General Elements Content -->
+            </div>
+        
+    </div>
+    <!-- END Form Components Row -->
+</div>
+<!-- END Page Content -->

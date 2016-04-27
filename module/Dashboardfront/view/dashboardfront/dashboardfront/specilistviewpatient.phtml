@@ -1,0 +1,184 @@
+<!-- Page content -->
+<div id="page-content">
+    <!-- Forms Components Header -->
+    <div class="content-header">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="header-section">
+                    <h1>Refered Patient Details</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Forms Components Header -->
+
+    <!-- Form Components Row -->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Horizontal Form Block -->
+<?php 
+// plan type
+$plan_type[1] = 'Individual';
+$plan_type[2] = 'Family';
+$plan_type[3] = 'Addon';
+
+$specialist_arr[1] = 'Dentist';
+$specialist_arr[2] = 'Pediatric Dentists';
+$specialist_arr[3] = 'Other Specialist';
+
+// plan cycle
+$plan_billing_cycle[1] = 'Monthly';
+$plan_billing_cycle[2] = 'Annually';
+
+$plan_bill_cycle[1] = 'Month';
+$plan_bill_cycle[2] = 'Year';
+
+
+// gender type
+$sex[1] = 'Male';
+$sex[2] = 'Female';
+
+$salutation[1] = 'Mr.';
+$salutation[2] = 'Ms.';
+$salutation[3] = 'Mrs.';
+
+     //print_r($patient[0]) ;
+?>
+            <div class="block">
+                <!-- General Elements Content -->
+                <form action="/dashboardfront/specilistpatient" method="get" class="form-horizontal form-bordered">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Name</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo $patient[0]['patient_salutation'].' '.$patient[0]['patient_firstname'].' '.$patient[0]['patient_lastname'];?></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">DOB</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo date('m-d-Y',strtotime($patient[0]['patient_dob']));?></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Last 4 digits of SSN</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo $patient[0]['patient_ssn'];?></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Sex</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo $sex[$patient[0]['patient_sex']];?></p>
+                        </div>
+                    </div>
+<?php if($patient[0]['parent_id']==0) { ?>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Address</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo $patient[0]['patient_address'];?></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Zip</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo $patient[0]['patient_zip'];?></p>
+                        </div>
+                    </div>
+<?php } ?>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Phone</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo $patient[0]['patient_phone'];?></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Mobile</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo $patient[0]['patient_mobile'];?></p>
+                        </div>
+                    </div>
+<?php if($patient[0]['parent_id']==0) { ?>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Family Info</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo $patient[0]['patient_family_info'];?></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Last Procedure Info</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo $patient[0]['patient_lastprocedure_info'];?></p>
+                        </div>
+                    </div>
+<?php } ?>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Email</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo $patient[0]['patient_email'];?></p>
+                        </div>
+                    </div>
+<?php if($patient[0]['parent_id']==0) { ?>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Plan Name</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo $patient[0]['plan_name'];?></p>
+                        </div>
+                    </div>
+<?php
+// chk plan type
+$arr=array();$count =1;
+  $plantype="";
+foreach($patientonly as $patientonlydetail){
+    if($patientonlydetail['parent_id']==$patid){
+       $arr[$i++]=$count;
+    }
+}
+if(count($arr)>0){
+   $plantype = $plan_type[2];  
+}
+if($patient[0]['parent_id']>0) {
+    $plantype = $plan_type[3];
+}
+if(!$plantype)
+$plantype = $plan_type[1];
+
+?>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Plan Type</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo $plantype;?></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Plan Cycle</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo $plan_billing_cycle[$patient[0]['plan_cycle']];?></p>
+                        </div>
+                    </div>
+<?php } ?>
+<?php
+                    $labels['0']['class'] = "label-danger";
+                    $labels['0']['text'] = "Inactive";
+                    $labels['1']['class'] = "label-success";
+                    $labels['1']['text'] = "Active";
+?>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Status</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo $labels[$patient[0]['patient_status']]['text'];?></p>
+                        </div>
+                    </div>
+                    <div class="form-group form-actions">
+                        <div class="col-md-9 col-md-offset-3">
+                            <button type="submit" class="btn btn-effect-ripple btn-primary">Back</button>
+                        </div>
+                    </div>
+                    </form>
+                <!-- END General Elements Content -->
+            </div>
+        
+    </div>
+    <!-- END Form Components Row -->
+</div>
+<!-- END Page Content -->

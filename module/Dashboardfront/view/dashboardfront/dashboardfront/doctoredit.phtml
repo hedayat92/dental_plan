@@ -1,0 +1,176 @@
+<?php echo $this->doctype(); 
+use Zend\Session\Container;
+$session = new Container('User');
+$userdatails =array();
+$docdetails= $session->offsetGet('userdetail');
+                    // gender type
+                    $sex[1] = 'Male';
+                    $sex[2] = 'Female';
+
+                    $specialist_arr[1] = 'Dentist';
+                    $specialist_arr[2] = 'Pediatric Dentists';
+                    $specialist_arr[3] = 'Other Specialist';
+
+                    $doc_avatar_dir = "/img/placeholders/avatars/";
+?>
+
+
+
+<!-- Page content -->
+<div id="page-content">
+    <!-- Forms Components Header -->
+    <div class="content-header">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="header-section">
+                    <h1>Edit Profile</h1>
+                </div>
+            </div>
+            <div class="col-sm-6 hidden-xs">
+                <div class="header-section">
+                    <ul class="breadcrumb breadcrumb-top">
+                        <li><a href="/dashboardfront/doctorimagechange/<?php echo  $doc_r[0]['doc_id'];?>" data-toggle="tooltip" title="Avatar" class="btn btn-effect-ripple btn-xs btn-success"><i class="fa fa-image"></i> Avatar</a></li>
+                        <li><a href="/dashboardfront/changepassword" data-toggle="tooltip" title="Change Password" class="btn btn-effect-ripple btn-xs btn-success"><i class="fa fa-key"></i> Change Password</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Forms Components Header -->
+
+    <!-- Form Components Row -->
+    <div class="row">
+<?php if($msg==1) { ?>
+    <div class="col-md-12">
+        <!-- Success Alert -->
+        <div class="alert alert-success alert-dismissable">
+            <button aria-hidden="true" data-dismiss="alert" class="close" type="button">x</button>
+            <h4><strong>Success</strong></h4>
+            <p>Record Updated</p>
+        </div>
+        <!-- END Success Alert -->
+    </div>
+<?php } else { ?>
+        <div class="col-md-12">
+            <!-- Horizontal Form Block -->
+            <div class="block">
+
+                <!-- General Elements Content -->
+                <form action="" method="post" class="form-horizontal form-bordered">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-text-input">Avatar</label>
+                        <div class="col-md-6">
+                            <img src="<?php echo $doc_avatar_dir.$doc_r[0]['doc_avatar'];?>" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-text-input">First Name</label>
+                        <div class="col-md-6">
+                            <input type="text" id="doc_firstname" name="doc_firstname" class="form-control" placeholder="First Name" value="<?php echo $doc_r[0]['doc_firstname'];?>">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-text-input">Last Name</label>
+                        <div class="col-md-6">
+                            <input type="text" id="doc_lastname" name="doc_lastname" class="form-control" placeholder="last Name" value="<?php echo $doc_r[0]['doc_lastname'];?>">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Email</label>
+                        <div class="col-md-6">
+                            <input type="text" id="doc_email" name="doc_email" class="form-control" placeholder="Email" value="<?php echo $doc_r[0]['doc_email'];?>">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-text-input">Phone</label>
+                        <div class="col-md-6">
+                            <input type="text" id="doc_phone" name="doc_phone" class="form-control" placeholder="Phone" value="<?php echo $doc_r[0]['doc_phone'];?>">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-text-input">Secondary Phone</label>
+                        <div class="col-md-6">
+                            <input type="text" id="doc_phone2" name="doc_phone2" class="form-control" placeholder="Phone 2" value="<?php echo $doc_r[0]['doc_phone2'];?>">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-textarea-input">Address</label>
+                        <div class="col-md-9">
+                            <textarea id="doc_address" name="doc_address" rows="7" class="form-control" placeholder="Address, Street, City, State"><?php echo $doc_r[0]['doc_address'];?></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-text-input">Zip</label>
+                        <div class="col-md-6">
+                            <input type="text" id="doc_zip" name="doc_zip" class="form-control" placeholder="Zip" value="<?php echo $doc_r[0]['doc_zip'];?>">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-text-input">Gender</label>
+                        <div class="col-md-6">
+                            <select name="doc_sex" id="doc_sex" class="form-control">
+                                <option value="">-Select-</option>
+                                <?php foreach($sex as $sex_key=>$sex_val) { 
+                                    if($sex_key==$doc_r[0]['doc_sex']) {
+                                        $chksex = 'selected="selected"';
+                                    } else { $chksex = ''; }                                
+    ?>
+                                    <option value="<?php echo $sex_key;?>" <?php echo $chksex;?>><?php echo $sex_val;?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-text-input">Speciality</label>
+                        <div class="col-md-6">
+                            <select name="doc_speciality" id="doc_speciality" class="form-control">
+                                <option value="">-Select-</option>
+                                <?php 
+                                    foreach($specialist_arr as $skey=>$sval) { $speciality_chked = '';
+                                        if($skey<3)  { 
+                                        if($skey==$doc_r[0]['doc_speciality']) $speciality_chked = 'selected="selected"';
+                                ?>
+                                <option value="<?php echo $skey;?>" <?=$speciality_chked?>><?php echo $sval;?></option>
+                                <?php } } ?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Username</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo $doc_r[0]['doc_username'];?></p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-text-input">License No.</label>
+                        <div class="col-md-6">
+                            <input type="text" id="doc_license_no" name="doc_license_no" class="form-control" placeholder="License No." value="<?php echo $doc_r[0]['doc_license_no'];?>">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-text-input">Contact Person</label>
+                        <div class="col-md-6">
+                            <input type="text" id="doc_contact_person" name="doc_contact_person" class="form-control" placeholder="Contact Person" value="<?php echo ($_POST['doc_contact_person']) ? $_POST['doc_contact_person'] : $doc_r[0]['doc_contact_person'];?>">
+
+                            <input type="hidden" id="doc_id" name="doc_id" class="form-control"  value="<?php echo  $doc_r[0]['doc_id'];?>">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group form-actions">
+                        <div class="col-md-9 col-md-offset-3">
+                            <button type="submit" class="btn btn-effect-ripple btn-primary">Submit</button>
+                            <button type="reset" class="btn btn-effect-ripple btn-danger" onclick="javascript: window.location.assign('/dashboardfront/welcome')">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+                <!-- END General Elements Content -->
+            </div>
+        
+    </div>
+<?php } ?>
+    <!-- END Form Components Row -->
+</div>
+<!-- END Page Content -->

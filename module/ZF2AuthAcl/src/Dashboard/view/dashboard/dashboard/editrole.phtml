@@ -1,0 +1,65 @@
+
+<div class="row">
+   <?php 
+
+if ($this->flashMessenger()->hasMessages()) {
+    echo '<div class="alert alert-info">';
+    $messages = $this->flashMessenger()->getMessages();
+    foreach($messages as $message) {
+        echo $message;
+    }
+  echo '</div>';
+}
+?>
+</div>
+<div style="background:#F7F7F7;height:470px;">
+        <a class="hiddenanchor" id="toregister"></a>
+        <a class="hiddenanchor" id="tologin"></a>
+
+        <div id="wrapper">
+            <div id="login" class="animate form">
+                <section>
+    <?php
+    $form->setAttribute('action', $this->url('dashboard', array('action' => 'editrole','id'=>$this->id)));
+    $form->prepare();
+    echo $this->form()->openTag($form);
+        echo $this->formhidden($form->get('rid'));
+    ?>
+                        <h1 style="color:#1B75BA;">Role Edit Here</h1>
+                          <div>
+                           
+                         <?php echo $this->formElement($form->get('role')); ?>
+                          </div>
+                   
+                         <div>
+                          
+                        </div>
+                        <div>
+                     <?php
+                             echo $this->formSubmit($form->get('submit'));
+                      ?>
+
+
+                            <a class="reset_pass" href="<?php echo $this->url('home') ?>">Cancel</a>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="separator">
+                        <div class="clearfix"></div>
+                            <br />
+                       </div>
+                   
+                    <!-- form -->
+                </section>
+                <!-- content -->
+            </div>
+         </div>
+    </div>
+
+
+
+
+
+
+
+
+

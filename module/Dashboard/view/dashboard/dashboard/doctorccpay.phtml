@@ -1,0 +1,148 @@
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+<script type="text/javascript">Stripe.setPublishableKey("<?php echo $publishable_key;?>");</script>
+<script type="text/javascript">
+jQuery(function($) {
+  $('#payment-form').submit(function(event) {
+    var $form = $(this);
+
+    // Disable the submit button to prevent repeated clicks
+    $form.find('button').prop('disabled', true);
+
+    Stripe.card.createToken($form, stripeResponseHandler);
+
+    // Prevent the form from submitting with the default action
+    return false;
+  });
+});
+
+function stripeResponseHandler(status, response) {
+  var $form = $('#payment-form');
+
+  if (response.error) {
+    // Show the errors on the form
+    $form.find('.payment-errors').text(response.error.message);
+    $form.find('button').prop('disabled', false);
+  } else {
+    // response contains id and card, which contains additional card details
+    var token = response.id;
+    // Insert the token into the form so it gets submitted to the server
+    $form.append($('<input type="hidden" name="stripeToken" />').val(token));
+    // and submit
+    $form.get(0).submit();
+  }
+};
+</script>
+
+
+
+
+<!-- Page content -->
+<div id="page-content">
+    <!-- Forms Components Header -->
+    <div class="content-header">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="header-section">
+                    <h1>Doctor Credit Card Details</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row"><div class="bank-errors"></div>
+    </div>
+    <!-- END Forms Components Header -->
+
+    <!-- Form Components Row -->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Horizontal Form Block -->
+            <div class="block">
+<?php
+
+/*   3 for change and 4 for cancel Subscription                */
+if(trim($doctorDetails[0]['cc_number']) && !$action) {    // here i use this bracket in case when no action and cc_number exist
+
+//  echo trim($doctorDetails[0]['cc_number']) ;
+  // echo $action ;die;
+
+
+?>                  <form class="form-horizontal form-bordered">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-text-input">Card Number</label>
+                        <div class="col-md-6">
+                            <p class="form-control-static"><?php  echo str_repeat('X',12).$cc_numberDecription;?></p>
+                        </div>
+                    </div>
+                    <div class="form-group form-actions">
+                        <div class="col-md-9 col-md-offset-3">
+                            <button type="reset" class="btn btn-effect-ripple btn-success" onclick="javascript: window.location.assign('/logout')">Back</button> <button type="reset" class="btn btn-effect-ripple btn-danger" onclick="javascript: window.location.assign('/dashboard/doctorccpay/3/<?php echo $docUserID?>')">Change</button>  <button type="reset" class="btn btn-effect-ripple btn-danger" onclick="javascript: window.location.assign('/dashboard/doctorccpay/4/<?php echo $docUserID?>')">Cancel Subscription</button>
+                        </div>
+                    </div>
+
+                    </form>
+<?php } else {
+ if($action==4) { ?>
+                <form id="payment-form" action="" method="post" class="form-horizontal form-bordered">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-text-input"></label>
+                        <div class="col-md-6">
+                            <p class="form-control-static">Confirm your Choice</p>
+                        </div>
+                    </div>
+                    <div class="form-group form-actions">
+                        <div class="col-md-9 col-md-offset-3">
+                            <button type="reset" class="btn btn-effect-ripple btn-success" onclick="javascript: window.location.assign('/dashboard/doctorccpay')">Back</button>  <button type="reset" class="btn btn-effect-ripple btn-danger" onclick="javascript: window.location.assign('/dashboard/doctorccpay/8/<?php echo $docUserID?>')">Cancel Subscription</button>
+                <!-- here I pass 8 for situation when doctor want to edit subscription     -->
+                        </div>
+                    </div>
+
+                    </form>
+
+<?php } else { ?>
+
+ <?php //echo "fdsfsd"; die;?>
+
+                <!-- General Elements Content -->
+                <form id="payment-form" action="/dashboard/doctorccpay<?php echo '/'.$action.'/'.$docUserID ;?>" method="post" class="form-horizontal form-bordered">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-text-input">Card Number</label>
+                        <div class="col-md-6">
+                            <input type="text" size="20" data-stripe="number" name="number" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-text-input">CVC</label>
+                        <div class="col-md-6">
+                            <input type="text" size="4" data-stripe="cvc" name="cvc" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-text-input">Expiration (MM/YYYY)</label>
+                        <div class="col-md-6">
+                            <input type="text" size="2" data-stripe="exp-month"  name="exp_month"/><span> / </span>
+    <input type="text" size="4" data-stripe="exp-year" name="exp_year"/>
+                        </div>
+                    </div>
+                    <div class="form-group form-actions">
+                        <div class="col-md-9 col-md-offset-3">
+                    <?php if($action==3) { ?>
+                            <button type="submit" class="btn btn-effect-ripple btn-primary">Update</button>
+                    <?php } else { ?>
+                            <button type="submit" class="btn btn-effect-ripple btn-primary">Submit Payment</button>
+                    <?php } ?>
+                        </div>
+                    </div>
+                <input type="hidden" name="doc_id" value="<?php echo $docUserID;?>" />
+                </form>
+<?php } }?>
+                <!-- END General Elements Content -->
+            </div>
+        
+    </div>
+    <!-- END Form Components Row -->
+</div>
+<!-- END Page Content -->
+
+<!-- Load and execute javascript code used only in this page -->
+<script src="/js/pages/formsComponents.js"></script>
+<script>$(function(){ FormsComponents.init(); });</script>

@@ -1,0 +1,106 @@
+<!-- Page content -->
+<div id="page-content">
+    <!-- Table Styles Header -->
+    <div class="content-header">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="header-section">
+
+                    <h1>ID Card <?php //echo "- ". $pat_details->patient_firstname.' '.$pat_details->patient_lastname;?></h1>
+                </div>
+            </div>
+			
+        </div>
+    </div>
+    <!-- END Table Styles Header -->
+    <!-- Datatables Block -->
+
+    <div class="block full">
+        <div class="table-responsive">
+            <table cellpadding="0" cellspacing="0" border="0" width="950" align="center">
+    	<tr>
+        	<td valign="top" colspan="3" height="30"></td>
+        </tr>
+    	<tr>
+        	<td valign="top" width="30px;"></td>
+            <td valign="top">
+            	<table cellpadding="0" cellspacing="0" border="0" width="890" align="center">
+                    <tr>
+                    	<td valign="top" colspan="2"><img src="http://dentalplansoftware.com/front_img/logo3.png" width="889" height="136" alt="" title="" /></td>
+                    </tr>
+                    <tr>
+                        <td valign="top" colspan="2" height="30"></td>
+                    </tr>
+                    <tr>
+                    	<td valign="top" width="445"></td>
+                        <td valign="top" width="445">
+                        	<table cellpadding="0" cellspacing="0" border="0" width="445">
+                                <tr>
+                                    <td valign="top" style="font-family:Arial, Helvetica, sans-serif; font-size:34px; color:#626363">Patient Name:&nbsp;<strong style="color:#2aa7e2;"><?php echo $pat_details->patient_firstname.' '.$pat_details->patient_lastname;?></strong></td>
+                                </tr>
+                                <tr>
+                                    <td valign="top" colspan="2" height="20"></td>
+                                </tr>
+                                <tr>
+                                    <td valign="top" style="font-family:Arial, Helvetica, sans-serif; font-size:29px; color:#626363">Patient ID:&nbsp;<strong style="color:#2aa7e2;"><?php echo $pat_details->patient_id;?></strong></td>
+                                </tr>
+                                <tr>
+                                    <td valign="top" colspan="2" height="20"></td>
+                                </tr>
+                                <tr>
+                                    <td valign="top" style="font-family:Arial, Helvetica, sans-serif; font-size:29px; color:#626363">Plan Type:&nbsp;<strong style="color:#2aa7e2;"><?php echo $plan_name;?></strong></td>
+                                </tr>
+                                <tr>
+                                    <td valign="top" colspan="2" height="35"></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" colspan="2" height="30"></td>
+                    </tr>
+                    <tr>
+                    	<td valign="top" width="445" bgcolor="#2aa7e2"></td>
+                        <td valign="top" width="445" bgcolor="#2aa7e2">
+                        	<table cellpadding="0" cellspacing="0" border="0" width="445">
+                            	<tr>
+                                    <td valign="top" colspan="2" height="30"></td>
+                                </tr>
+                                <tr>
+                                	<td valign="top" width="50"><img src="http://dentalplansoftware.com/front_img/front_07.png" width="39" height="39" /></td>
+                                    <td valign="top" style="font-family:Arial, Helvetica, sans-serif; font-size:29px; color:#ffffff"><?php echo $doc_details->doc_firstname.' '.$doc_details->doc_lastname;?></td>
+                                </tr>
+                                <tr>
+                                    <td valign="top" colspan="2" height="20"></td>
+                                </tr>
+                                <tr>
+                                	<td valign="top"><img src="http://dentalplansoftware.com/front_img/front_07-03.png" width="39" height="39" /></td>
+                                    <td valign="top" style="font-family:Arial, Helvetica, sans-serif; font-size:29px; color:#ffffff"><?php echo $doc_details->doc_phone;?></td>
+                                </tr>
+                                <tr>
+                                    <td valign="top" colspan="2" height="20"></td>
+                                </tr>
+                                <tr>
+                                	<td valign="top"><img src="http://dentalplansoftware.com/front_img/front_07-04.png" width="39" height="39" /></td>
+                                    <td valign="top" style="font-family:Arial, Helvetica, sans-serif; font-size:29px; color:#ffffff"><?php echo $doc_details->doc_address;?></td>
+                                </tr>
+                                <tr>
+                                    <td valign="top" colspan="2" height="35"></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                 </table>
+            </td>
+            <td valign="top" width="30px;"></td>
+        </tr>
+        <tr>
+        	<td valign="top" colspan="3" height="30"></td>
+        </tr>
+    </table>
+        </div>
+	<div><button type="submit" class="btn btn-effect-ripple btn-primary" onclick="javascript: window.location.assign('/dashboardfront/welcome')">Back</button></div>
+    </div>
+    <!-- END Datatables Block -->
+</div>
+<!-- END Page Content -->

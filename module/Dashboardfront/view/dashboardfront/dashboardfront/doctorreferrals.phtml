@@ -1,0 +1,100 @@
+<?php echo $this->doctype(); 
+use Zend\Session\Container;
+$session = new Container('User');
+$userdatails =array();
+$docdetails= $session->offsetGet('userdetail');
+// gender type
+$sex[1] = 'Male';
+$sex[2] = 'Female';
+?>
+<!-- Page content -->
+<div id="page-content">
+    <!-- Table Styles Header -->
+    <div class="content-header">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="header-section">
+                    <h1>Referred Patients</h1>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- END Table Styles Header -->
+    <!-- Datatables Block -->
+    <!-- Datatables is initialized in js/pages/uiTables.js -->
+    <div class="block full">
+        <div class="table-responsive">
+            <table id="example-datatable" class="table table-striped table-bordered table-vcenter">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Sex</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Referred To</th>
+                        <th>Comments</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $labels['0']['class'] = "label-danger";
+                    $labels['0']['text'] = "Inactive";
+                    $labels['1']['class'] = "label-success";
+                    $labels['1']['text'] = "Active";
+					// get list of plans for this doctor
+					foreach($DoctorReferralsListing as $pat_r) {
+						unset($phone);
+						if($pat_r['patient_phone']) 
+							$phone[] = $pat_r['patient_phone'];
+						if($pat_r['patient_mobile']) 
+							$phone[] = $pat_r['patient_mobile'];
+
+						if($pat_r['status']==1) {
+							$status = 'Accpeted';
+						} else if($pat_r['status']==2) {
+							$status = 'Rejected';
+						} else {
+							$status = 'Pending';
+						}
+
+			
+					?>
+                    <tr>
+                        <td><?php echo $pat_r->patient_firstname.' '.$pat_r->patient_lastname; ?></td>
+                        <td><?php echo (date('Y')-date('Y',strtotime($pat_r->patient_dob))); ?></td>
+                        <td><?php echo $sex[$pat_r->patient_sex]; ?></td>
+                        <td><?php echo $pat_r->patient_email;; ?></td>
+                        <td><?php if(is_array($phone)) { echo implode(' / ',$phone); } else echo $phone; ?></td>
+                        <?php
+                            foreach($doctorDetails as $doctorDetailsvalue) 
+                             {
+                              if($doctorDetailsvalue['doc_id']==$pat_r->refer_to)
+                                {
+                                 $referred_to = $doctorDetailsvalue['doc_firstname'].' '.$doctorDetailsvalue['doc_lastname'] ;
+                              ?>
+                          <td><?php echo $referred_to; ?></td>
+                               <?php
+                               }
+                             }
+                          ?>
+ 
+
+
+                        <td><?php echo $pat_r->comments; ?></td>
+                        <td><?php echo $status; ?></td>
+                    </tr>
+                    <?php }?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- END Datatables Block -->
+</div>
+<!-- END Page Content -->
+<!-- Load and execute javascript code used only in this page -->
+<script src="/js/pages/uiTables.js"></script>
+<script>$(function(){ UiTables.init(); });</script>
+<script type="text/javascript">$.fn.dataTable.ext.errMode = 'none';</script>

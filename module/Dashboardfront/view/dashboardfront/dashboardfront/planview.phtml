@@ -1,0 +1,76 @@
+<!-- Page content -->
+<div id="page-content">
+    <!-- Forms Components Header -->
+    <div class="content-header">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="header-section">
+                    <h1>Plan Details</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Forms Components Header -->
+
+    <!-- Form Components Row -->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Horizontal Form Block -->
+            <div class="block">
+
+                 <form action="" method="get" class="form-horizontal form-bordered">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Name</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo @$plans[0]['plan_name'];?></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Individual Price (Monthly / Annually)</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo @$plans[0]['plan_monthly_price'].' / '.@$plans[0]['plan_yearly_price'];?></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Addon Price (Monthly / Annually)</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo @$plans[0]['addon_monthly_price'].' / '.@$plans[0]['addon_yearly_price'];?></p>
+                        </div>
+                    </div>
+					<?php if(@$plan_services){?>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Services</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static">
+						
+	<?php foreach($plan_services as $ps): ?>
+		     <b><?php echo $ps['service_type']; ?></b><br />	
+								<i><?php echo $ps['service_name1'];?></i><br>
+								<i><?php echo $ps['service_notes'];?></i><br>
+								<?php endforeach; ?>
+
+							</p>
+                        </div>
+                    </div>
+					 <?php } ?>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Heading Line</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo stripslashes(@$plans[0]['heading_line']);?></p>
+                        </div>
+                    </div>
+                    <div class="form-group form-actions">
+                        <div class="col-md-9 col-md-offset-3">
+                            <button type="button" class="btn btn-effect-ripple btn-primary" onclick="javascript: window.location.assign('/dashboardfront/plan')">Back</button>
+                        </div>
+                    </div>
+					</form>
+                <!-- END General Elements Content -->
+				
+				
+            </div>
+        
+    </div>
+    <!-- END Form Components Row -->
+</div>
+<!-- END Page Content -->

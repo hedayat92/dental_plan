@@ -1,0 +1,176 @@
+<?php
+$flashMessage = $this->flashMessenger()->getMessages();
+if (count($flashMessage)) {
+     echo '<div style="width:100%;height:60px;padding-top:26px;font-family:calibri;font-size:14px;">';
+ ?>
+<?php
+    foreach ($flashMessage as $msg){
+        foreach ($msg as $type => $message) {
+               echo $message ;
+           }
+         }
+    echo '</div>';    
+     }
+$doc_avatar_dir = "/img/placeholders/avatars/";
+$specialist_arr[1] = 'Dentist';
+$specialist_arr[2] = 'Pediatric Dentists';
+$specialist_arr[3] = 'Specialist';
+
+
+ ?>
+
+
+
+<!-- Page content -->
+<div id="page-content">
+    <!-- Forms Components Header -->
+    <div class="content-header">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="header-section">
+                    <h1>Doctor Details</h1>
+                </div>
+            </div>
+            <div class="col-sm-6 hidden-xs">
+                <div class="header-section">
+                    <ul class="breadcrumb breadcrumb-top">
+                        <li><a href="/dashboard/plan/<?php echo $doctorgrid[0]['doc_id'];?>" data-toggle="tooltip" title="Plans" class="btn btn-effect-ripple btn-xs btn-success"><i class="fa fa-arrows"></i> Plans</a></li>
+                        <li><a href="<?php echo $this->url('dashboard',array('action'=>'doctorimagechange','id'=>$doctorgrid[0]['doc_id'])) ; ?>" data-toggle="tooltip" title="Avatar" class="btn btn-effect-ripple btn-xs btn-success"><i class="fa fa-image"></i> Avatar</a></li>
+                        <li><a href="<?php echo $this->url('dashboard',array('action'=>'doctoradd','id'=>$doctorgrid[0]['doc_id'])) ; ?>" data-toggle="tooltip" title="Edit Doctor" class="btn btn-effect-ripple btn-xs btn-warning"><i class="fa fa-pencil"></i> Edit</a></li>
+                        <li><a href="<?php echo $this->url('dashboard',array('action'=>'doctorsdel','id'=>$doctorgrid[0]['doc_id'])) ; ?>" data-toggle="tooltip" title="Delete Doctor" class="btn btn-effect-ripple btn-xs btn-danger" onclick="return confirm('Are you sure you want to delete this Doctor?');"><i class="fa fa-times"></i> Delete</a></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- END Forms Components Header -->
+
+    <!-- Form Components Row -->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Horizontal Form Block -->
+            <div class="block">
+                <!-- General Elements Content -->
+                <div class="form-horizontal form-bordered">
+      <?php if($doctorgrid[0]['doc_avatar']) {?>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Avatar</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><img src="<?php echo $doc_avatar_dir.$doctorgrid[0]['doc_avatar'];?>" width="60" height="60" /></p>
+                        </div>
+                    </div>
+      <?php } ?>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Name</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo $doctorgrid[0]['doc_firstname'].' '.$doctorgrid[0]['doc_lastname'];?></p>
+                        </div>
+                    </div>
+                  <div class="form-group">
+                      <label class="col-md-3 control-label">License No.</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo $doctorgrid[0]['doc_license_no'];?></p>
+                        </div>
+                  </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Phone</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo $doctorgrid[0]['doc_phone'];?>
+                            </p>
+                        </div>
+                    </div>
+<?php if($doctorgrid[0]['doc_phone2']) { ?>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Secondary Phone</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo $doctorgrid[0]['doc_phone2'] ; ?></p>
+                        </div>
+                    </div>
+<?php } ?>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Address</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo $doctorgrid[0]['doc_address'] ;?></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Zip</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo $doctorgrid[0]['doc_zip'];?></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Specialiy</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo $specialist_arr[$doctorgrid[0]['doc_speciality']]; ?></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">On Contract</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo date('m-d-Y',strtotime($doctorgrid[0]['add_date']));?></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Email</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo  $doctorgrid[0]['doc_email'] ; ?></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Contact Person</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo $doctorgrid[0]['doc_contact_person'] ; ?></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Status</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo ($doctorgrid[0]['doc_status']) ? 'Active' : 'Inactive';?></p>
+                        </div>
+                    </div>
+                   <!-- <div class="form-group form-actions">
+                        <div class="col-md-9 col-md-offset-3">
+                            <a href="doctors_grid.php"><button type="submit" class="btn btn-effect-ripple btn-primary">Back</button></a> <button type="submit" class="btn btn-effect-ripple btn-primary" onclick="javascript: window.location.assign('list_patients.php?doc_id=<?php echo $doc_r->doc_id;?>')">List Patients</button>
+                        </div>
+                    </div>-->
+                </div>
+       <div class="form-horizontal form-bordered">
+           <div class="form-group">
+              <label class="col-md-3 control-label">Total Revenue</label>
+                  <div class="col-md-9">
+                            <p class="form-control-static"><?php  echo $patTotalRevenue[0]['pat_total_revenue']; ?></p>
+                  </div>
+              </div>
+        </div>
+
+    
+
+        <div class="form-horizontal form-bordered">
+                    <div class="form-group form-actions">
+                        <div class="col-md-9 col-md-offset-3">
+                            <a href="<?php echo $this->url('dashboard',array('action'=>'doctorgrid')) ;?>"><button type="submit" class="btn btn-effect-ripple btn-primary">Back</button>
+                            </a> 
+                          <a href="<?php echo $this->url('dashboard',array('action'=>'listpatients','id'=>$doctorgrid[0]['doc_id'])) ;?>">
+                            <button type="submit" class="btn btn-effect-ripple btn-primary" onclick="javascript: window.location.assign()">List Patients
+                            </button> 
+                          </a>
+                           <a href="<?php echo $this->url('dashboard',array('action'=>'docpaydetail','id'=>$doctorgrid[0]['doc_id'])) ;?>">
+                            <button type="submit" class="btn btn-effect-ripple btn-primary" onclick="javascript: window.location.assign()">Payment Details
+                            </button> 
+                          </a>
+                            <a href="<?php echo $this->url('dashboard',array('action'=>'docpayoutdetail','id'=>$doctorgrid[0]['doc_id'])) ;?>">
+                            <button type="submit" class="btn btn-effect-ripple btn-primary">Next Payout
+                            </button> 
+                          </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- END General Elements Content -->
+            </div>
+        </div>
+    </div>
+    <!-- END Form Components Row -->
+</div>
+<!-- END Page Content -->

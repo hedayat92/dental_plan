@@ -1,0 +1,86 @@
+
+<!-- Page content -->
+<div id="page-content">
+    <!-- Table Styles Header -->
+    <div class="content-header">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="header-section">
+                    <h1>Plans</h1>
+                </div>
+            </div>
+            <div class="col-sm-6 hidden-xs">
+                <div class="header-section">
+                    <ul class="breadcrumb breadcrumb-top">
+                        <li><a href="/dashboardfront/planedit" class="btn btn-effect-ripple btn-primary" data-toggle="tooltip" data-placement="left" title="" style="overflow: hidden; position: relative;" data-original-title="Create new plan">Add new plan<!--<i class="fa fa-plus"></i>--></a></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- END Table Styles Header -->
+    <!-- Datatables Block -->
+    <!-- Datatables is initialized in js/pages/uiTables.js -->
+    <?php if($delplanid==10000) { ?>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="alert alert-success alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+                        <h4><strong>Success</strong></h4>
+                        <p>Record Deleted successfully!</p>
+                </div>
+            </div>
+        </div>
+    <?php } ?>
+
+    <div class="block full">
+        <div class="table-responsive">
+            <table id="example-datatable" class="table table-striped table-bordered table-vcenter">
+                <thead>
+                    <tr>
+                        <th class="text-center" style="width: 50px;">ID</th>
+                        <th>Name</th>
+                        <th>Individual Price (Monthly / Annually)</th>
+                        <th>Addon Price (Monthly / Annually)</th>
+                        <th># Patients</th>
+                        <th class="text-center" style="width: 75px;"><i class="fa fa-flash"></i></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    // get list of plans for this doctor
+                    
+                    foreach($listPlan as $plan_r){ 
+                            $count=0;
+                            foreach($listPatients as $patientforplan_r){ 
+                                 if(($patientforplan_r['plan_id'])==($plan_r['plan_id'])){
+                                   // echo $count ;
+                                  //  echo $patientforplan_r['plan_id']."==".$plan_r['plan_id'] ;
+                                    $count= $count+1;
+                                 }
+                         }
+      // get #patients in plan
+                   ?>
+                    <tr>
+                        <td class="text-center"><?php echo $plan_r['plan_id']; ?></td>
+                        <td><?php echo $plan_r['plan_name']; ?></td>
+                        <td><?php echo $plan_r['plan_monthly_price'].' / '.$plan_r['plan_yearly_price']; ?></td>
+                        <td><?php echo $plan_r['addon_monthly_price'].' / '.$plan_r['addon_yearly_price']; ?></td>
+                        <td><?php echo $count; ?></td>
+                        <td class="text-center">
+                            <a href="/dashboardfront/planview/<?php echo $plan_r['plan_id'];?>" data-toggle="tooltip" title="View Plan" class="btn btn-effect-ripple btn-xs btn-info"><i class="fa fa-laptop"></i></a>
+                            <a href="/dashboardfront/planedit/<?php echo $plan_r['plan_id'];?>/<?php echo $plan_r['doc_id'];?>" data-toggle="tooltip" title="Edit Plan" class="btn btn-effect-ripple btn-xs btn-success"><i class="fa fa-pencil"></i></a>
+                            <a href="/dashboardfront/delplan/<?php echo $plan_r['plan_id'];?>" data-toggle="tooltip" title="Delete Plan" class="btn btn-effect-ripple btn-xs btn-danger" onclick="return confirm('Are you sure you want to delete this Plan?');"><i class="fa fa-times"></i></a>
+                        </td>
+                    </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- END Datatables Block -->
+</div>
+<!-- END Page Content -->
+   <script src="/js/pages/uiTables.js"></script>
+<script>$(function(){ UiTables.init(); });</script>

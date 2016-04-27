@@ -1,0 +1,115 @@
+<?php
+//echo $ipaddress;
+$title = 'My Dashboard';
+$this->headTitle($title);
+
+   //  use Zend\Session\Container;
+   //  $session = new Container('User') ;
+   //  $userrolereports= $session->offsetGet('userrolepermission');
+
+
+
+
+
+
+//<!DOCTYPE HTML>
+?>
+
+ <div class="row">
+     
+        <div class="col-sm-6 col-lg-3">
+            <a href="javascript:void(0)" class="widget">
+                <div class="widget-content widget-content-mini text-right clearfix">
+                    <div class="widget-icon pull-left themed-background">
+                        <i class="gi gi-cardio text-light-op"></i>
+                    </div>
+                    <h2 class="widget-heading h3">
+                        <strong><span data-toggle="counter" data-to="<?= $totalPatients?>"></span></strong>
+                    </h2>
+                    <span class="text-muted">PATIENTS</span>
+                </div>
+            </a>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <a class="widget" href="/dashboard/doctorgrid">
+                <div class="widget-content widget-content-mini text-right clearfix">
+                    <div class="widget-icon pull-left themed-background-success">
+                        <i class="gi gi-user text-light-op"></i>
+                    </div>
+                    <h2 class="widget-heading h3 text-success">
+                        <strong> <span data-to="<?php echo $totalDoctor ; ?>" data-toggle="counter"></span></strong>
+                    </h2>
+                    <span class="text-muted">DOCTORS</span>
+                </div>
+            </a>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <a class="widget" href="/dashboard/specialistdoctorgrid">
+                <div class="widget-content widget-content-mini text-right clearfix">
+                    <div class="widget-icon pull-left themed-background-success">
+                        <i class="gi gi-user text-light-op"></i>
+                    </div>
+                    <h2 class="widget-heading h3 text-success">
+                        <strong> <span data-to="<?php echo $totalSpecialist ; ?>" data-toggle="counter"></span></strong>
+                    </h2>
+                    <span class="text-muted">SPECIALISTS</span>
+                </div>
+            </a>
+        </div>
+         <div class="col-sm-6 col-lg-3">
+            <a class="widget" href="javascript:void(0)">
+                <div class="widget-content widget-content-mini text-right clearfix">
+                    <div class="widget-icon pull-left themed-background-success">
+                        <i class="gi gi-user text-light-op"></i>
+                    </div>
+                    <h2 class="widget-heading h3 text-success">
+                        <strong> <span data-to="0" data-toggle="counter"><?php echo $refTotal ; ?></span></strong>
+                    </h2>
+                    <span class="text-muted">REFERALS</span>
+                </div>
+            </a>
+        </div>
+       <div class="col-sm-6 col-lg-3">
+            <a class="widget" href="javascript:void(0)">
+                <div class="widget-content widget-content-mini text-right clearfix">
+                    <div class="widget-icon pull-left themed-background-warning">
+                        <i class="gi gi-briefcase text-light-op"></i>
+                    </div>
+                    <h2 class="widget-heading h3 text-warning">
+                        <strong>$ <span data-to="<?php echo $patientsPayments ; ?>" data-toggle="counter"><?php echo $patientsPayments ; ?></span></strong>
+                    </h2>
+                    <span class="text-muted">FROM PATIENTS</span>
+                </div>
+            </a>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+            <a class="widget" href="javascript:void(0)">
+                <div class="widget-content widget-content-mini text-right clearfix">
+                    <div class="widget-icon pull-left themed-background-danger">
+                        <i class="gi gi-wallet text-light-op"></i>
+                    </div>
+                    <h2 class="widget-heading h3 text-danger">
+                        <strong>$ <span data-to="<?php echo $commissionTotal ;?>" data-toggle="counter"></span></strong>
+                    </h2>
+                    <span class="text-muted">FROM DOCTORS</span>
+                </div>
+            </a>
+        </div>
+       <div class="col-sm-6 col-lg-3">
+            <a class="widget" href="javascript:void(0)">
+                <div class="widget-content widget-content-mini text-right clearfix">
+                    <div class="widget-icon pull-left themed-background-warning">
+                        <i class="gi gi-briefcase text-light-op"></i>
+                    </div>
+                    <h2 class="widget-heading h3 text-warning">
+                        <strong>$ <span data-to="<?php echo $payoutTotal ; ?>" data-toggle="counter"></span></strong>
+                    </h2>
+                    <span class="text-muted">DOCTORS PAYOUT</span>
+                </div>
+            </a>
+        </div>
+        
+    </div>
+
+
+

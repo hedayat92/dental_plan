@@ -1,0 +1,49 @@
+<!-- Page content -->
+<div id="page-content">
+    <!-- Table Styles Header -->
+    <div class="content-header">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="header-section">
+<?php //$pat_details = getPatientDetail($_GET['pat_id']); ?>
+                    <h1>Payment Details <?php //echo "- ". $pat_details->patient_firstname.' '.$pat_details->patient_lastname;?></h1>
+                </div>
+            </div>
+			
+        </div>
+    </div>
+    <!-- END Table Styles Header -->
+    <!-- Datatables Block -->
+<?php
+
+
+?>
+    <div class="block full">
+        <div class="table-responsive">
+            <table id="example-datatable" class="table table-striped table-bordered table-vcenter">
+                <thead>
+                    <tr>
+                        <th class="text-center" style="width: 10%;">S.No.</th>
+                        <th class="text-center" style="width:30%;">Date</th>
+                        <th class="text-right" style="width:30%">Amount</th>
+                        <th class="text-center" style="width:30%">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php $count = 1;
+					/*while($pat_pays_r = mysqli_fetch_object($pat_pays_qry)) { ?>
+                    <tr>
+						<td class="text-center"><?php echo $count++;?></td>
+                        <td class="text-center"><?php echo date('d-M-Y',strtotime($pat_pays_r->pay_date)); ?></td>
+                        <td class="text-right"><?php //echo curr($pat_pays_r->amount); ?></td>
+                        <td class="text-center"><?php echo ($pat_pays_r->pay_status==1) ? 'Success' : 'Failed'; ?></td>
+                    </tr>
+                    <?php }*/ ?>
+                </tbody>
+            </table>
+        </div>
+	<div><button type="submit" class="btn btn-effect-ripple btn-primary" onclick="javascript: window.location.assign('/dashboardfront/welcome')">Back</button></div>
+    </div>
+    <!-- END Datatables Block -->
+</div>
+<!-- END Page Content -->

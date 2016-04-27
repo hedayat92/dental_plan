@@ -1,0 +1,90 @@
+<!-- Page content -->
+<div id="page-content">
+    <!-- Forms Components Header -->
+    <div class="content-header">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="header-section">
+                    <h1><?php  if($service_id) { echo "Edit"; } else { echo "Add";}?> Service</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Forms Components Header -->
+
+    <!-- Form Components Row -->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Horizontal Form Block -->
+            <div class="block">
+
+
+                <!-- General Elements Content -->
+                <form action="/dashboard/specialserviceedit/<?php echo $service_id;?>/<?php echo $doc_id;?>" method="post" class="form-horizontal form-bordered">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-text-input">Service Heading</label>
+                        <div class="col-md-6">
+                            <input type="text" id="service_type" name="service_type" class="form-control" placeholder="Service Heading" value="<?php echo $services[0]['service_type'];?>">
+                        </div>
+                    </div>
+					<?php for($i=1;$i<=10;$i++) { 
+					if($i==1) { $disp = 'block'; } else { $disp = 'none'; }
+	$fieldname = "service_name".$i;
+					if(trim($services[0][$fieldname])) { $disp = 'block'; } 
+					?>
+                    <div class="form-group" id="block<?php echo $i;?>" style="display:<?php echo $disp;?>">
+                        <label class="col-md-3 control-label" for="example-text-input">Service Name</label>
+                        <div class="col-md-6">
+                            <input type="text" id="service_name<?php echo $i;?>" name="service_name[]" class="form-control" placeholder="Service Name" value="<?php echo $services[0][$fieldname];?>">&nbsp;&nbsp;&nbsp;<?php if($i<10) { ?><a href="javascript:void(0);" onclick="shownext(<?php echo $i;?>);" id="addmore<?php echo $i;?>">add more</a><?php } ?>
+                        </div>
+                    </div>
+<?php } ?>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-text-input">Price</label>
+                        <div class="col-md-6">
+                            <input type="text" id="price" name="price" class="form-control" placeholder="Price" value="<?php echo $services[0]['price'];?>">
+                        </div>
+                    </div>
+                    <div class="form-group form-actions">
+                        <div class="col-md-9 col-md-offset-3">
+                            <button type="submit" class="btn btn-effect-ripple btn-primary">Submit</button>
+                            <button type="reset" class="btn btn-effect-ripple btn-danger" onclick="javascript: window.location.assign('/dashboard/specialservice')">Cancel</button>
+                            
+                            <button type="submit" onclick="addnextnow()" class="btn btn-effect-ripple btn-primary">Add Next</button>
+                        </div>
+                    </div>
+				<input type="hidden" name="doc_id" value="<?php echo $doc_id;?>" />
+				<input type="hidden" name="service_id" value="<?php echo $service_id;?>" />
+				<input type="hidden" id="addnext" name="addnext" value="0" />
+                </form>
+                <!-- END General Elements Content -->
+            </div>
+        
+    </div>
+    <!-- END Form Components Row -->
+</div>
+
+<!-- END Page Content -->
+
+<script type="text/javascript">
+function shownext(ctrlno) {
+	ctrlname = 'block'+(ctrlno+1);
+	showlink = 'addmore'+ctrlno;
+	document.getElementById(ctrlname).style.display='block';
+	document.getElementById(showlink).style.display='none';
+
+}
+function addnextnow() {
+	document.getElementById('addnext').value = 1;
+	return true;
+}
+</script>
+
+<!-- ckeditor.js, load it only in the page you would like to use CKEditor (it's a heavy plugin to include it with the others!) 
+<script src="js/plugins/ckeditor/ckeditor.js"></script>-->
+
+<!-- Load and execute javascript code used only in this page -->
+<script src="js/pages/formsComponents.js"></script>
+<script>$(function(){ FormsComponents.init(); });</script>
+
+

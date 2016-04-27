@@ -1,0 +1,92 @@
+<?php
+
+$title = 'My Dashboard';
+//$this->headTitle($title);
+//<!DOCTYPE HTML>
+
+?>
+<!-- Page content -->
+<div id="page-content">
+    <!-- Table Styles Header -->
+    <div class="content-header">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="header-section">
+                    <h1>Reports</h1>
+                </div>
+            </div>
+<div class="col-sm-6 hidden-xs">
+                <div class="header-section">
+                    <ul class="breadcrumb breadcrumb-top">
+                        <li><a data-original-title="All Time" style="overflow: hidden; position: relative;" title="" data-placement="left" data-toggle="tooltip" class="btn btn-effect-ripple btn-primary" href="<?php echo $this->url('dashboardfront',array('action'=>'reports')) ; ?>">All Time</a></li>
+                        <li><a data-original-title="All Time" style="overflow: hidden; position: relative;" title="" data-placement="left" data-toggle="tooltip" class="btn btn-effect-ripple btn-primary" href="<?php echo $this->url('dashboardfront',array('action'=>'reports','id'=>'1')) ; ?>">Per Year</a></li>
+                        <li><a data-original-title="All Time" style="overflow: hidden; position: relative;" title="" data-placement="left" data-toggle="tooltip" class="btn btn-effect-ripple btn-primary" href="<?php echo $this->url('dashboardfront',array('action'=>'reports','id'=>'2')) ; ?>">Per Month</a></li>
+                        <li><a data-original-title="All Time" style="overflow: hidden; position: relative;" title="" data-placement="left" data-toggle="tooltip" class="btn btn-effect-ripple btn-primary" href="<?php echo $this->url('dashboardfront',array('action'=>'reports','id'=>'3')) ; ?>">Per Day</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Table Styles Header -->
+    <!-- Datatables Block -->
+
+    <div class="block full">
+        <div class="table-responsive">
+            <table id="example-datatable" class="table table-striped table-bordered table-vcenter">
+                <thead>
+                    <tr>
+                        <th class="text-center" style="width: 10%;">S.No.</th>
+                        <th class="text-center" style="width:40%;">Timeframe <?php if($reportid=='1'){echo 'year';}else if($reportid=='2'){ echo 'month';}else if($reportid=='3'){ echo 'day';}else{ echo 'All';}?></th>
+                        <th class="text-right" style="width:50%">Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php 
+                     $count = 1;
+                     $monthname[1] = 'Jan';
+                     $monthname[2] = 'Feb';
+                     $monthname[3] = 'Mar';
+                     $monthname[4] = 'Apr';
+                     $monthname[5] = 'May';
+                     $monthname[6] = 'Jun';
+                     $monthname[7] = 'Jul';
+                     $monthname[8] = 'Aug';
+                     $monthname[9] = 'Sep';
+                     $monthname[10] = 'Oct';
+                     $monthname[11] = 'Nov';
+                     $monthname[12] = 'Dec';
+
+				    
+					 foreach($reports as  $values) {
+                    
+                      ?>
+                    <tr>
+						<td class="text-center"><?php echo $count++;?></td>
+                        <td class="text-center">
+                          <?php if($reportid=='1'){ echo $values['col1'] ;}else if($reportid=='2'){ echo $monthname[$values['col1']].' - '.$values['col2']; }else if($reportid=='3'){ echo date('d-m-Y',strtotime($values['col1']));}else{ echo 'All Time';}
+                          ?>
+                     </td>
+                        <td class="text-right"><?php echo $values['pat_total_revenue']; ?></td>
+                    </tr>
+                    <?php } ?>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- END Datatables Block -->
+</div>
+<!-- END Page Content -->
+<script type="text/javascript">$.fn.dataTable.ext.errMode = 'none';</script>
+
+   <script src="/js/pages/uiTables.js"></script>
+<script>$(function(){ UiTables.init(); });</script>
+
+
+
+
+
+
+
+
+

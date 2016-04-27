@@ -1,0 +1,203 @@
+<div class="row" style="padding-left:20px;width:100%;">
+<?php
+$flashMessage = $this->flashMessenger()->getMessages();
+if (count($flashMessage)) {
+     echo '<div class="alert alert-info">';
+ ?>
+<?php
+    foreach ($flashMessage as $msg){
+        foreach ($msg as $type => $message) {
+               echo $message ;
+           }
+         }
+    echo '</div>';     
+     }
+ ?>
+</div>
+
+<div style="height:470px;">
+        <a class="hiddenanchor" id="toregister"></a>
+        <a class="hiddenanchor" id="tologin"></a>
+
+        <div id="wrapper">
+            <div id="login" class="animate form" style="min-width:500px;">
+                <section>
+    <?php
+    $form->setAttribute('action', $this->url('dashboard', array('action' => 'addrole')));
+    $form->prepare();
+    echo $this->form()->openTag($form);
+    ?>
+                    <h1 style="color:#1B75BA;width:360px">Role Add Here</h1>
+                      <div>
+                             <?php echo $this->formElement($form->get('role')); ?>
+                      </div>
+                <div>
+                    <h3 style="color:#757A8D">Check For Giving Permission</h3>
+                    <div style="width:100%;float:left;">
+
+
+
+
+    <style type="text/css">
+       code {
+            white-space: nowrap;
+            color:transparent;
+        }
+    </style>
+
+    <!-- start tree configuration -->
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.js"></script>
+    <script type="text/javascript"
+            src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <link rel="stylesheet" type="text/css"
+          href="https://code.jquery.com/ui/1.11.4/themes/ui-lightness/jquery-ui.css"/>
+<!--
+    <script type="text/javascript" src="minified/jquery.tree.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="minified/jquery.tree.min.css"/>
+    <!-- end tree configuration -->
+
+    <!-- start development configuration -->
+
+    <script type="text/javascript" src="/src/js/jquery.tree.js"></script>
+    <link rel="stylesheet" type="text/css" href="/src/css/jquery.tree.css"/>
+
+    <!-- start development configuration -->
+
+    <script type="text/javascript">
+        //<!--
+        $(document).ready(function() {
+            $( "#accordion" ).accordion({
+                'collapsible': false,
+                'active': null,
+                'heightStyle': 'content'
+            });
+            $('.jquery').each(function() {
+                eval($(this).html());
+            });
+            $('.button').button();
+        });
+        //-->
+    </script>
+<div id="accordion">
+      <h3></h3>
+        <div id="example-0">
+     
+            <code style="background-color:transparent;height:5px;" class="jquery" lang="text/javascript">
+                $('#example-0 div').tree({
+                });
+            </code>
+            <div>
+                <ul>
+                     <?php
+                          foreach($allclientsdetail as $clientsdetail => $clientsdetailvalue) 
+                          {                                                    // clientloop start here
+                      ?>
+                    <li style="text-align:left;"><input type="checkbox"><span><?php  echo strtoupper($clientsdetailvalue['client_name'])  ; ?></span>
+                        <ul>
+                         <?php
+                          foreach($allcategorydetail as $categorydetail => $categorydetailvalue) 
+                             {                                                    // categoryloop start here
+                          ?>
+                         <li><input type="checkbox"><span><?php echo $categorydetailvalue['category_name']  ; ?></span>
+                                <ul>
+                                   <?php    
+                                    foreach($permission as $permissionname =>$permissionvalue)
+                                     {  
+                                                 $clientidArray= explode(',',$permissionvalue['client_id']) ;
+                                                 $id_clienttable = $clientsdetailvalue['id'] ;
+                                                 $id_categorytable = $categorydetailvalue['id'] ;
+                                                 if((in_array($id_clienttable,$clientidArray))&&($id_categorytable==$permissionvalue['cat_id'])){
+                                    ?>  
+                                      <li><input type="checkbox" value="<?php  echo $permissionvalue['id'] ; ?>" name="chkbox[]" id="chkbox"><?php  echo $permissionvalue['permission_name'] ; ?>
+                                      </li>
+                                    <?php
+                                       }   // if of permission loop close here
+                                     }    //permission  loop close here 
+                                    ?>
+                                </ul>
+                            </li>
+                            <?php
+                              }  //category loop close here 
+                              ?> 
+                        </ul>
+                   </li> 
+                <?php
+                    }  //client loop close here 
+                ?>                         
+        </ul>
+      </div>
+    </div>
+ </div>
+</div>
+</div>
+                      <div style="margin-top:10px;">
+                        <?php 
+                             echo $this->formSubmit($form->get('submit'));
+                        ?>
+                        <a class="reset_pass" href="<?php echo  $this->url('dashboard', array('action' => 'viewroles')) ; ?>">Cancel</a> 
+                     
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="separator">
+                        <div class="clearfix"></div>
+                            <br />
+                       </div>
+                   
+                    <!-- form -->
+                </section>
+                <!-- content -->
+            </div>
+         </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

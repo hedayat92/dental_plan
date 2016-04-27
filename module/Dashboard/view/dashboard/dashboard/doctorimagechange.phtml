@@ -1,0 +1,106 @@
+
+<div id="page-content" class="inner-sidebar-left123">
+    <?php if($msg_del_done==2) { ?>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="alert alert-success alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+                        <h4><strong>Success</strong></h4>
+                        <p>Image deleted successfully</p>
+                </div>
+            </div>
+        </div>
+    <?php } ?>
+    <?php
+     if($success_msg==3) { ?>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="alert alert-success alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+                        <h4><strong>Success</strong></h4>
+                        <p><?php echo  $success_msgtext;?></p>
+                </div>
+            </div>
+        </div>
+    <?php } else if($uploadOk==0) { ?>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="alert alert-danger alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+                        <h4><strong>Error</strong></h4>
+                        <p><?php echo "Sorry, your file was not uploaded.";?></p>
+                </div>
+            </div>
+        </div>
+    <?php } 
+
+    ?>
+
+    <!-- Media Box Content -->
+    <!-- Add the category value for each item in its data-category attribute (for the filter functionality to work) -->
+    <div class="row media-filter-items">
+        <div class="col-sm-4 col-lg-3" style="padding-left:30px;">
+<?php 
+if($doc_avatar[0]['doc_avatar']!='') { ?>
+            <div class="media-items animation-fadeInQuick2" data-category="image">
+                <div class="media-items-options text-right">
+<!--                    <a href="<?php echo $doc_avatar_dir.$get_img_r->doc_avatar;?>" class="btn btn-xs btn-info" data-toggle="lightbox-image">View</a>
+                    <a href="javascript:void(0)" class="btn btn-xs btn-success"><i class="fa fa-pencil"></i></a>
+-->                    <a href="/dashboard/deletedoctorimage/<?php echo $id;?>" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a>
+                </div>
+                
+
+                <div class="media-items-content">
+                    <img src="<?php echo "/img/placeholders/avatars/".$doc_avatar[0]['doc_avatar'];?>" width="60" /><!--<i class="fa fa-file-picture-o fa-5x text-success"></i>-->
+                </div>
+                <h4>
+                    <strong><?php echo $doc_avatar[0]['doc_avatar'];?></strong><br>
+                </h4>
+            </div>
+<?php  }//else { ?>
+            <div class="block-section">
+                <h4 class="inner-sidebar-header">Upload Profile Image</h4>
+                <form action="/dashboard/doctorimagechange/<?php echo $id;?>" enctype="multipart/form-data" method="post">
+                <input type="file" class="dropzone" name="doc_avatar" /> <small><i>image dimension 60x60</i></small><br /><br />
+                <input type="submit" name="submit" value="Submit" />
+                </form>
+            </div>
+<?php //} ?>
+        </div>
+    </div>
+    <!-- END Media Box Content -->
+</div>
+<!-- END Page Content -->
+
+
+<!--
+<div id="page-content" class="inner-sidebar-left123">
+    <div class="row media-filter-items">
+        <div class="col-sm-4 col-lg-3">
+			<?php foreach($doc_avatar as $doc_ava){ if(@$doc_ava){ ?>
+            <div class="media-items animation-fadeInQuick2" data-category="image">
+                <div class="media-items-options text-right">
+           <a href="doctors_avatar.php?delava=1" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a>
+                </div>
+                <div class="media-items-content">
+                    <img src="/img/placeholders/avatars/<?php echo $doc_ava['doc_avatar'];?>" width="100" />
+                </div>
+                <h4>
+                    <strong><?php echo $doc_ava['doc_avatar'];?></strong><br>
+                </h4>
+            </div>
+<?php }}  ?>
+            <div class="block-section">
+                <h4 class="inner-sidebar-header">Upload Profile Image</h4>
+                <form action="/dashboard/doctorimagechange/<?php echo $id;?>" enctype="multipart/form-data" method="post">
+        <input type="file" class="dropzone" name="doc_avatar" /> <small><i>image dimension 60x60</i></small><br /><br />
+				
+        <input type="submit" name="submit" value="Submit" />
+        </form>
+            </div>
+<?php //} ?>
+        </div>
+    </div>
+</div>
+
+-->

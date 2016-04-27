@@ -1,0 +1,96 @@
+
+<div class="row">
+   <?php 
+
+if ($this->flashMessenger()->hasMessages()) {
+    echo '<div class="alert alert-info">';
+    $messages = $this->flashMessenger()->getMessages();
+    foreach($messages as $message) {
+        echo $message;
+    }
+  echo '</div>';
+}
+
+?>
+</div>
+
+ <div style="background:#F7F7F7;height:470px;">
+        <a class="hiddenanchor" id="toregister"></a>
+        <a class="hiddenanchor" id="tologin"></a>
+
+        <div id="wrapper">
+            <div id="login" class="animate form">
+                <section class="login_content">
+    <?php $form->setAttribute('onsubmit', 'return false');
+         $form->prepare();
+         echo $this->form()->openTag($form);
+         echo $this->formHidden($form->get('id'));
+    ?>
+                        <h1 style="color:#1B75BA">User Adding Form</h1>
+						<div>
+                          <?php echo $this->formElement($form->get('fname')); ?>
+                        </div>
+						<div>
+                          <?php echo $this->formElement($form->get('lname')); ?>
+                        </div>
+                        <div>
+                          <?php echo $this->formElement($form->get('email')); ?>
+                        </div>
+                        <div align="center" style="width:96%">
+                          <?php echo $this->formElement($form->get('role_id')); ?>
+                        </div>
+                         <div>
+                        </div>
+                        <div style="margin-top:10px;">
+                         <?php
+                             echo $this->formSubmit($form->get('submit'));
+                          ?>
+<a class="reset_pass" href="<?php echo  $this->url('dashboard', array('action' => 'viewusers')) ; ?>">Cancel</a>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="separator">
+                        <div class="clearfix"></div>
+                            <br />
+                       </div>
+                   
+                    <!-- form -->
+                </section>
+                <!-- content -->
+            </div>
+         </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,60 @@
+<?php
+$flashMessage = $this->flashMessenger()->getMessages();
+if (count($flashMessage)) {
+     echo '<div style="width:100%;height:60px;padding-top:176px;font-family:calibri;font-size:14px;">';
+ ?>
+<?php
+    foreach ($flashMessage as $msg){
+        foreach ($msg as $type => $message) {
+               echo $message ;
+           }
+         }
+    echo '</div>';     
+     }
+ ?>
+<table class="table table-condensed">
+
+    <thead>
+      <tr>
+        <th>
+      
+
+       <a href="<?php echo $this->url('dashboard',array('action'=>'addusers')) ; ?>" id="delbutton">   
+       	<span class="fa fa-plus-square"><span style="font-size:10px;"> User</span>
+       </a>
+
+      </th>
+        <th></th>
+        <th></th>
+      </tr>
+       <tr style="width: 100%">
+        <th>Serial No.</th>
+        <th>Username</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php 
+      $serialno =1 ;
+      foreach($users as $username =>$value) {  
+           echo '&nbsp;' ;
+        ?>
+      <tr>
+        <td> <?php  echo  $serialno ; $serialno =$serialno+1 ;  ?></td>
+        <td><?php  echo  $value['email'] ; ?></td>
+        <td>
+          <a href="<?php echo $this->url('dashboard',array('action'=>'edituser','id'=>$value['user_id'])); ?>"  id="editbutton">
+            <span class="glyphicon glyphicon-edit"></span>
+          </a>
+
+          
+
+           <a href="#" id="delbutton" onclick="deleteuser('<?php  echo $value['user_id'] ; ?>')">   <span class="glyphicon glyphicon-trash"></span>
+          </a>
+        </td>
+      </tr>
+       <?php
+       }
+       ?>
+    </tbody>
+  </table>

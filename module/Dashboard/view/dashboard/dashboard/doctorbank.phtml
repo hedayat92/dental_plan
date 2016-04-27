@@ -1,0 +1,150 @@
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+<script type="text/javascript">Stripe.setPublishableKey('<?php echo $publishable_key;?>');</script>
+<script type="text/javascript">
+function chkdetails() { 
+	var routingnumber = document.getElementById('bank_routing_number').value;
+	var accountnumber = document.getElementById('bank_account_number').value;
+	if(Stripe.bankAccount.validateRoutingNumber(routingnumber, 'US')==false) {
+		alert("Invalid Routing number");
+		return false;
+	}
+	if(Stripe.bankAccount.validateAccountNumber(accountnumber, 'US')==false) {
+		alert("Invalid Account number");
+		return false;
+	}
+	Stripe.bankAccount.createToken({
+	  country: 'US',
+	  currency: 'USD',
+	  routing_number: routingnumber,
+	  account_number: accountnumber
+	}, stripeResponseHandler);
+	return true;
+}
+function stripeResponseHandler(status, response) {
+  var $form = $('#payment-form');
+
+  if (response.error) {
+    // Show the errors on the form
+    $form.find('.payment-errors').text(response.error.message);
+    $form.find('button').prop('disabled', false);
+  } else {
+    // response contains id and card, which contains additional card details
+    var token = response.id;
+    // Insert the token into the form so it gets submitted to the server
+    $form.append($('<input type="hidden" name="stripeToken" />').val(token));
+    // and submit
+    $form.get(0).submit();
+  }
+};
+</script>
+<!-- Page content -->
+<div id="page-content">
+    <!-- Forms Components Header -->
+    <div class="content-header">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="header-section">
+                    <h1><?php //if($doctorid) { echo "Edit"; } else { echo "Add";}?> Doctor Bank Details</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Forms Components Header -->
+	<?php if($success_msg){?>
+	<div class="row">
+            <div class="col-sm-12">
+                <div class="alert alert-success alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+                        <h4><strong>Success</strong></h4>
+                        <p><?php echo $success_msg;?></p>
+                </div>
+            </div>
+        </div>
+	<?php } //print_r($doctordetails[0]);?>
+    <!-- Form Components Row -->
+    <div class="row">
+
+   
+        <div class="col-md-12">
+            <!-- Horizontal Form Block -->
+            <div class="block">
+               <!-- General Elements Content -->
+                <form id="payment-form" action="<?php // echo $this->url('dashboard',array('action'=>'doctorbank','id'=>$doctorid));?>" method="post" class="form-horizontal form-bordered" onsubmit="return chkdetails();">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-text-input">Bank Account Type</label>
+                        <div class="col-md-6">
+							<select id="bank_account_type" name="bank_account_type" class="form-control">
+								<option value="individual">Individual</option>
+								<option value="corporation">Corporation</option>
+							</select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-text-input">Legal Name</label>
+                        <div class="col-md-6">
+                            <input type="text" id="legal_name" name="legal_name" class="form-control" placeholder="Legal Name" value="<?php echo $doctordetails[0]['legal_name'];?>">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-text-input">Bank Routing Number</label>
+                        <div class="col-md-6">
+                            <input type="text" id="bank_routing_number" name="bank_routing_number" class="form-control" placeholder="Bank Routing Number" value="<?php echo $doctordetails[0]['bank_routing_number'];?>">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-text-input">Bank Account Number</label>
+                        <div class="col-md-6">
+                            <input type="text" id="bank_account_number" name="bank_account_number" class="form-control" placeholder="Bank Account Number" value="<?php echo $doctordetails[0]['bank_account_number'];?>">
+                        </div>
+                    </div>
+                    <div class="form-group form-actions">
+                        <div class="col-md-9 col-md-offset-3">
+                            <button type="submit" class="btn btn-effect-ripple btn-primary">Submit</button>
+                            <button type="reset" class="btn btn-effect-ripple btn-danger" onclick="javascript: window.location.assign('/dashboard/doctorccpay/0/<?=$doctorid?>')">Next</button>
+                        </div>
+                    </div>
+				<input type="hidden" name="doc_id" value="<?php echo $doctorid;//echo $_GET['doc_id'];?>" />
+				<input type="hidden" name="email" value="<?php echo $doctordetails[0]['doc_email'];?>" />
+                </form>
+                <!-- END General Elements Content -->
+            </div>
+        
+    </div>
+    <!-- END Form Components Row -->
+</div>
+<!-- END Page Content -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,25 @@
+<table class="table table-condensed">
+    <thead>
+
+      <tr>
+        <th>Module Name</th>
+        <th>Permission</th>
+        <th>Role</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+    	<?php foreach($userroledetail as $username =>$value) {  
+    	  ?>
+      <tr>
+        <td><?php  echo  $value['resource_name'] ; ?></td>
+        <td><?php  echo  $value['role_name'] ; ?></td>
+        <td><?php  echo  $value['permission_name'] ; ?></td>
+        <td><a href="#" class="btn btn-info" style="border-radius:2px;font-size:12px;line-height:1.33;padding: 2px;"  onclick="edituserroledetail(<?php  echo $value['permission_id'] ; ?>, <?php  echo $value['rid'] ; ?>, '<?php echo $value['permission_name'] ; ?>', '<?php echo $value['role_name'] ; ?>')">
+          <span class="glyphicon glyphicon-edit"></span> Edit</a></td>
+      </tr>
+       <?php
+       }
+       ?>
+    </tbody>
+  </table>

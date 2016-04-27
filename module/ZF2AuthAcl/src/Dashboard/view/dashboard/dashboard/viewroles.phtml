@@ -1,0 +1,67 @@
+<?php
+$flashMessage = $this->flashMessenger()->getMessages();
+if (count($flashMessage)) {
+     echo '<div style="width:100%;height:60px;padding-top:20px;font-family:calibri;font-size:14px;">';
+ ?>
+<?php
+    foreach ($flashMessage as $msg){
+        foreach ($msg as $type => $message) {
+               echo $message ;
+           }
+         }
+    echo '</div>';     
+     }
+ ?>
+
+<table class="table table-condensed">
+     <thead>
+      <tr>
+        <th>
+        <a href="<?php echo $this->url('dashboard',array('action'=>'addrole'))  ; ?>" id="delbutton">   <span class="fa fa-plus-square"><span style="font-size:10px;"> Role</span>
+       </a>
+       </th>
+        <th></th>
+        <th></th>
+      </tr>
+       <tr>
+        <th>Serial No. </th>
+        <th>Role Description </th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+   <?php 
+   $counter = 1 ;
+    foreach($role as $rolename =>$value)
+     {  
+       echo '&nbsp;' ;
+     ?>
+     <tr>
+      <td style="width:10%;"><?php  echo $counter ;?> </td>
+      <td style="width:25%;">  
+     <?php
+     $form->prepare();
+     echo $this->form()->openTag($form);
+    ?>
+     <input type="hidden" value="<?php  echo $value['rid'] ; ?>" id="rid<?php  echo $counter ; ?>" name="rid">
+     <input id="role<?php  echo $counter ; ?>" class="form-control" type="text" value="<?php echo  $value['role_name'] ;?>" placeholder="Please Enter Role Here" required="required" name="role" readonly> 
+        </td>
+        <td style="width:20%;">
+         <a href="<?php echo $this->url('dashboard',array('action'=>'viewrolepermission','id'=>$value['rid'])); ?>"  id="editbutton">
+            <span class="glyphicon glyphicon-eye-open"></span>
+         </a>
+         <a href="<?php echo $this->url('dashboard',array('action'=>'editrolepermission','id'=>$value['rid'])); ?>"  id="editbutton">
+            <span class="glyphicon glyphicon-edit"></span>
+         </a>
+
+         <a href=""  id="delbutton"  onclick="deleterole(<?php  echo $value['rid'] ; ?>)">
+          <span class="glyphicon glyphicon-trash"></span>
+        </a>
+      </td>
+      </tr>
+      <?php
+      $counter = $counter+1 ;
+        }  // role loop close here 
+       ?>
+    </tbody>
+  </table>

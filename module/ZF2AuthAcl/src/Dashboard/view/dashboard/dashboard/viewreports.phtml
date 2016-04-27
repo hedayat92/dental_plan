@@ -1,0 +1,55 @@
+<?php
+$flashMessage = $this->flashMessenger()->getMessages();
+if (count($flashMessage)) {
+     echo '<div style="width:100%;height:60px;padding-top:20px;font-family:calibri;font-size:14px;">';
+ ?>
+<?php
+    foreach ($flashMessage as $msg){
+        foreach ($msg as $type => $message) {
+               echo $message ;
+           }
+         }
+    echo '</div>';     
+     }
+ ?>
+<table class="table table-condensed">
+
+    <thead>
+      <tr>
+        <th>
+        <a href="<?php echo $this->url('dashboard',array('action'=>'addreports')) ; ?>" id="delbutton"><span class="fa fa-plus-square"><span style="font-size:10px;"> Reports</span>
+       </a>
+      </th>
+        <th></th>
+        <th></th>
+      </tr>
+       <tr>
+        <th>Serial No.</th>
+        <th>Report Name</th>
+        <th>Report Url</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php 
+      $serialno =1 ;
+      foreach($reports as $reportsname =>$value) {  
+         echo '&nbsp;' ;
+        ?>
+      <tr>
+        <td> <?php  echo  $serialno ; $serialno =$serialno+1 ;  ?></td>
+        <td><?php  echo  $value['permission_name'] ; ?></td>
+        <td><?php  echo substr($value['permission_url'],0,15) ; ?></td>
+        <td>
+          <a href="<?php echo $this->url('dashboard',array('action'=>'editreports','id'=>$value['id'])); ?>"  id="editbutton">
+            <span class="glyphicon glyphicon-edit"></span>
+          </a>
+          <a href="#" id="delbutton" onclick="deletereports(<?php  echo $value['id'] ; ?>)">   <span class="glyphicon glyphicon-trash"></span>
+          </a>
+        </td>
+      </tr>
+       <?php
+       }
+       ?>
+    </tbody>
+  </table>

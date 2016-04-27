@@ -1,0 +1,249 @@
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<link href="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" />
+<script>
+  $(function() {
+    //   $("#date_of_birth").datepicker();
+   $('#date_of_birth').datepicker({
+                    format: "mm-dd-yyyy",
+                    "setDate": new Date(),
+        autoclose: true, 
+                }); 
+  });
+ </script>
+
+<?php
+// plan cycle
+$plan_billing_cycle[1] = 'Monthly';
+$plan_billing_cycle[2] = 'Annually';
+// gender type
+$sex[1] = 'Male';
+$sex[2] = 'Female';
+
+$salutation[1] = 'Mr.';
+$salutation[2] = 'Ms.';
+$salutation[3] = 'Mrs.';
+
+?>
+<!-- Page content -->
+<div id="page-content">
+    <!-- Forms Components Header -->
+    <div class="content-header">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="header-section">
+                    <h1><?php if($patientid) { echo "Edit"; } else { echo "Add";}?> Patient Details</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Forms Components Header -->
+
+    <!-- Form Components Row -->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Horizontal Form Block -->
+            <div class="block">
+
+                <!-- General Elements Content -->
+                <form action="/dashboardfront/managepatientedit" id="form-patients" method="post" class="form-horizontal form-bordered">
+        <?php 
+if(!$parentid){
+if($patientid) { 
+?>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Plan Name</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo $patientplan[0]['plan_name'];?></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-text-input">Plan Cycle</label>
+                        <div class="col-md-6">
+                    <p class="form-control-static"><?php echo $plan_billing_cycle[$patientplan[0]['plan_cycle']];?></p>
+                        </div>
+                    </div>
+
+        <?php }  else { ?>
+            <input type="hidden" name="plan_id" value="<?php echo $_GET['plan_id'];?>" />
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-text-input">Plan Cycle</label>
+                        <div class="col-md-6">
+                            <select id="plan_cycle" name="plan_cycle" class="form-control">
+                            <?php foreach($plan_billing_cycle as $pbckey=>$pbc) { 
+                        if($pbckey==$pat_r->plan_cycle) { $chked = 'select="selected"'; } else { $chked = ''; } 
+?>
+                                <option value="<?php echo $pbckey;?>" <?=$chked?>><?php echo $pbc;?></option>
+                            <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+
+        <?php } ?>
+
+<?php } ?>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-text-input">Salutation</label>
+                        <div class="col-md-6">
+                            <select id="patient_salutation" name="patient_salutation" class="form-control">
+                            <?php foreach($salutation as $saln) { 
+                if($saln==$pat_r->patient_salutation) { $seled = 'select="selected"'; } else { $seled = ''; } 
+?>
+                                <option value="<?php echo $saln;?>" <?=$seled?>><?php echo $saln;?></option>
+                            <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-text-input">First Name</label>
+                        <div class="col-md-6">
+                            <input type="text" id="patient_firstname" name="patient_firstname" class="form-control" placeholder="First Name" value="<?php echo  $patientplan[0]['patient_firstname'] ;?>">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-text-input">Last Name</label>
+                        <div class="col-md-6">
+                            <input type="text" id="patient_lastname" name="patient_lastname" class="form-control" placeholder="Last Name" value="<?php echo   $patientplan[0]['patient_lastname'] ;?>">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-text-input">DOB</label>
+                        <div class="col-md-6">
+                            <input type="text" id="date_of_birth" name="patient_dob" class="form-control" placeholder="DOB" value="<?php echo ($patientplan[0]['patient_dob']) ? date('m-d-Y',strtotime($patientplan[0]['patient_dob'])) : date('m-d-Y');?>">
+                        </div>
+                    </div>
+<?php if(!$parentid){ ?>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-text-input">Last 4 of Social Security Number </label>
+                        <div class="col-md-6">
+    <input type="text" id="patient_ssn" name="patient_ssn" class="form-control" placeholder="Social Security Number" value="<?php echo $patientplan[0]['patient_ssn'];?>">
+                        </div>
+                    </div>
+<?php } ?>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-text-input">Sex</label>
+                        <div class="col-md-6">
+                            <select name="patient_sex" id="patient_sex" class="form-control">
+                                <option value="">-Select-</option>
+                                <?php foreach($sex as $sex_key=>$sex_val) { 
+                                    if($sex_key==$patientplan[0]['patient_sex']) {
+                                        $chksex = 'selected="selected"';
+                                    } else { $chksex = ''; }                                
+    ?>
+                                    <option value="<?php echo $sex_key;?>" <?php echo $chksex;?>><?php echo $sex_val;?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+<?php if(!$parentid){ ?>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-text-input">Address</label>
+                        <div class="col-md-6">
+                            <textarea id="patient_address" name="patient_address" rows="7" class="form-control" placeholder="Address"><?php echo stripslashes($patientplan[0]['patient_address']);?></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-text-input">Zip</label>
+                        <div class="col-md-6">
+                            <input type="text" id="patient_zip" name="patient_zip" class="form-control" placeholder="Zip" value="<?php echo $patientplan[0]['patient_zip'];?>">
+                        </div>
+                    </div>
+<?php } ?>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-text-input">Phone</label>
+                        <div class="col-md-6">
+                            <input type="text" id="patient_phone" name="patient_phone" class="form-control" placeholder="Phone" value="<?php echo $patientplan[0]['patient_phone'];?>">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-text-input">Mobile</label>
+                        <div class="col-md-6">
+                            <input type="text" id="patient_mobile" name="patient_mobile" class="form-control" placeholder="Mobile" value="<?php echo $patientplan[0]['patient_mobile'];?>">
+                        </div>
+                    </div>
+
+        <?php if($patientid) { ?>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-text-input">Email</label>
+                        <div class="col-md-6">
+                            <p class="form-control-static"><?php echo $patientplan[0]['patient_email'];?></p>
+                        </div>
+                    </div>
+<?php if(!$parentid){ ?>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-text-input">Status</label>
+                        <div class="col-md-9">
+                            <div class="checkbox">
+                                <label class="switch switch-success">
+                                <?php if($patientplan[0]['patient_status']==1) { ?>
+                                    <input type="checkbox" id="patient_status" name="patient_status" checked>
+                                <?php } else { ?>
+                                    <input type="checkbox" id="patient_status" name="patient_status">
+                                <?php } ?><span></span></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-text-input">Accept Electronic Communication</label>
+                        <div class="col-md-9">
+                            <div class="checkbox">
+                                <label class="switch switch-success">
+                                <?php if($patientplan[0]['patient_consent']==1) { ?>
+                                    <input type="checkbox" id="patient_consent" name="patient_consent" checked>
+                                <?php } else { ?>
+                                    <input type="checkbox" id="patient_consent" name="patient_consent">
+                                <?php } ?><span></span></label>
+                            </div>
+                        </div>
+                    </div>
+
+<?php } ?>
+        <?php } else { ?>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-text-input">Email</label>
+                        <div class="col-md-6">
+                            <input type="text" id="patient_email" name="patient_email" class="form-control" placeholder="Email" value="">
+                        </div>
+                    </div>
+<?php if(!$parentid){ ?>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="example-text-input">Password</label>
+                        <div class="col-md-6">
+                            <input type="text" id="patient_password" name="patient_password" class="form-control" placeholder="Password" value="">
+                        </div>
+                    </div>
+<?php } ?>
+        <?php } ?>
+                    <div class="form-group form-actions">
+                        <div class="col-md-9 col-md-offset-3">
+<?php if(!$patientid) { ?>
+                            <button type="submit" class="btn btn-effect-ripple btn-primary">Next</button>
+<?php } else { ?>
+                            <button type="submit" class="btn btn-effect-ripple btn-primary">Update</button>
+<?php } ?>
+                            <button type="reset" class="btn btn-effect-ripple btn-danger" onclick="javascript: window.location.assign('/dashboardfront/patient')">Cancel</button>
+<?php if(!$patientid) { ?>
+                            <button type="submit" class="btn btn-effect-ripple btn-primary" onclick="return addonnow();">Add Family Member</button>
+<?php } ?>
+                        </div>
+                    </div>
+                <input type="hidden" name="pat_id" value="<?php echo $patientid;?>" />
+                <input type="hidden" name="addon" id="addon" value="0" />
+                <input type="hidden" name="parent_id" id="parent_id" value="<?php echo ($parentid) ? $parentid : '0';?>" />
+                </form>
+                <!-- END General Elements Content -->
+            </div>
+        
+    </div>
+    <!-- END Form Components Row -->
+</div>
+<script type="text/javascript">
+function addonnow() {
+    document.getElementById('addon').value = 1;
+    return true;
+}
+</script>
+
+
+
+<!-- END Page Content -->

@@ -1,0 +1,31 @@
+<div align="center">
+    <label>Role Permission Edit Form  </label>
+
+
+<form class="form-inline">
+    <?php
+$form->setAttribute('onsubmit', 'return false');
+$form->prepare();
+
+    ?>
+
+        <div class="form-group">
+           <div class="form-group">
+               <label>Module: <label>
+                 <?php  echo $this->formrow($form->get('module_id'));  ?>
+             
+           </div>
+        </div>
+
+    <div class="form-group">
+        <div class="form-group">
+        <?php  echo $this->formrow($form->get('permission_name'));  ?>
+           </div>
+        </div>
+       <div class="form-group">
+            <div class="col-xs-offset-2 col-xs-10">
+             <?php echo $this->formsubmit($form->get('submit'));   ?>
+            </div>
+      </div>
+   <?php  echo $this->form()->closeTag(); ?>
+</div>

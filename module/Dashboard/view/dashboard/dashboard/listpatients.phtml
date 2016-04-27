@@ -1,0 +1,112 @@
+<?php
+$flashMessage = $this->flashMessenger()->getMessages();
+if (count($flashMessage)) {
+     echo '<div style="width:100%;height:60px;padding-top:26px;font-family:calibri;font-size:14px;">';
+ ?>
+<?php
+    foreach ($flashMessage as $msg){
+        foreach ($msg as $type => $message) {
+               echo $message ;
+           }
+         }
+    echo '</div>';     
+     }
+ ?>
+
+<!-- Page content -->
+<div id="page-content">
+    <!-- Table Styles Header -->
+    <div class="content-header">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="header-section">
+                    <h1>Patients</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Table Styles Header -->
+    <!-- Datatables Block -->
+    <!-- Datatables is initialized in js/pages/uiTables.js -->
+    <div class="block full">
+        <div class="table-responsive">
+            <table id="example-datatable" class="table table-striped table-bordered table-vcenter">
+                <thead>
+                    <tr>
+                        <th class="text-center" style="width: 30px;">ID</th>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Sex</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Plan Name</th>
+                        <th>Plan Type</th>
+                        <th style="width: 30px;">Status</th>
+                        <th class="text-center" style="width: 75px;"><i class="fa fa-flash"></i></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $labels['0']['class'] = "label-danger";
+                    $labels['0']['text'] = "Inactive";
+                    $labels['1']['class'] = "label-success";
+                    $labels['1']['text'] = "Active";
+
+                    // gender type
+                    $sex[1] = 'Male';
+                    $sex[2] = 'Female';
+                    // plan type
+                  $plan_type[1] = 'Individual';
+                  $plan_type[2] = 'Family';
+                  $plan_type[3] = 'Addon';
+          foreach ($listpatient as $key => $listpatientvalue)
+           { // print_r($listpatientvalue);
+              $i=0;
+                $chk_plan_type_r=array();
+               foreach($listPatientsId as $listPatientsIdkey => $listPatientsIdvalue)
+               { 
+                 if($listPatientsIdvalue['parent_id']==$listpatientvalue['patient_id'])
+                 {
+                  $chk_plan_type_r[$i++]=$listpatientvalue['patient_id'];
+                 }
+               }
+            $countchk_plan_type_r   = count($chk_plan_type_r);
+               if($countchk_plan_type_r>0)
+               {
+                $plantype = $plan_type[2]; 
+               }
+if($listpatientvalue['parent_id']>0) {
+	$plantype = $plan_type[3];
+}
+if(!$plantype)
+$plantype = $plan_type[1];
+
+					?>
+            <tr>
+                <td class="text-center"><?php echo $listpatientvalue['patient_id']; ?></td>
+                <td><?php echo $listpatientvalue['patient_firstname'].' '.$listpatientvalue['patient_lastname']; ?></td>
+                <td><?php echo (date('Y')-date('Y',strtotime($listpatientvalue['patient_dob']))); ?></td>
+                        <td><?php echo $sex[$listpatientvalue['patient_sex']]; ?></td>
+                        <td><?php echo $listpatientvalue['patient_email']; ?></td>
+                        <td><?php if(isset($listpatientvalue['patient_phone'])) { echo $listpatientvalue['patient_phone'] ; }
+                        if((!empty($listpatientvalue['patient_phone']))&&(!empty($listpatientvalue['patient_mobile']))){ echo "/".$listpatientvalue['patient_mobile']; }
+                        if((empty($listpatientvalue['patient_phone']))&&(!empty($listpatientvalue['patient_mobile']))){ echo $listpatientvalue['patient_mobile']; }
+                         ?></td>
+                        <td><?php echo $listpatientvalue['plan_name']; ?></td>
+                        <td><?php echo $plantype; ?></td>
+                        <td><span class="label<?php echo " " . $labels[$pat_r->patient_status]['class']; ?>"><?php echo $labels[$listpatientvalue['patient_status']]['text'] ?></span></td>
+                        <td class="text-center">
+					<a href="<?php echo $this->url('dashboard',array('action'=>'patientdetails','id'=>$listpatientvalue['patient_id'],'idd'=>$listpatientvalue['doc_id'])) ;?>" data-toggle="tooltip" title="View Patient" class="btn btn-effect-ripple btn-xs btn-info"><i class="fa fa-laptop"></i>
+          </a>
+                            <!--<a href="patient_edit.php?pat_id=<?php echo $pat_r->patient_id;?>" data-toggle="tooltip" title="Edit Patient" class="btn btn-effect-ripple btn-xs btn-success"><i class="fa fa-pencil"></i></a>
+                            <a href="patients.php?delpat_id=<?php echo $pat_r->patient_id;?>" data-toggle="tooltip" title="Delete Patient" class="btn btn-effect-ripple btn-xs btn-danger" onclick="return confirm('Are you sure you want to delete this Patient?');"><i class="fa fa-times"></i></a>-->
+                        </td>
+                    </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- END Datatables Block -->
+</div>
+<!-- END Page Content -->

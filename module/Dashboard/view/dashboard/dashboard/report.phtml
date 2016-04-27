@@ -1,0 +1,82 @@
+<?php
+
+$title = 'My Dashboard';
+//$this->headTitle($title);
+//<!DOCTYPE HTML>
+
+?>
+<!-- Page content -->
+<div id="page-content">
+    <!-- Table Styles Header -->
+    <div class="content-header">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="header-section">
+                    <h1>Reports</h1>
+                </div>
+            </div>
+<div class="col-sm-6 hidden-xs">
+                <div class="header-section">
+                    <ul class="breadcrumb breadcrumb-top">
+                        <li><a data-original-title="All Time" style="overflow: hidden; position: relative;" title="" data-placement="left" data-toggle="tooltip" class="btn btn-effect-ripple btn-primary" href="reports.php">All Time</a></li>
+                        <li><a data-original-title="All Time" style="overflow: hidden; position: relative;" title="" data-placement="left" data-toggle="tooltip" class="btn btn-effect-ripple btn-primary" href="reports.php?frame=year">Per Year</a></li>
+                        <li><a data-original-title="All Time" style="overflow: hidden; position: relative;" title="" data-placement="left" data-toggle="tooltip" class="btn btn-effect-ripple btn-primary" href="reports.php?frame=month">Per Month</a></li>
+                        <li><a data-original-title="All Time" style="overflow: hidden; position: relative;" title="" data-placement="left" data-toggle="tooltip" class="btn btn-effect-ripple btn-primary" href="reports.php?frame=day">Per Day</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Table Styles Header -->
+    <!-- Datatables Block -->
+<?php
+if($_GET['frame']=='year') {
+$doc_totalr_qry = mysqli_query($cn,"select sum(dp.amount) as doc_total_revenue, YEAR(dp.pay_date) as col1 from doc_payments dp, doctor_details d where d.doc_id = dp.doc_id group by YEAR(dp.pay_date) order by dp.pay_date desc");
+} else if($_GET['frame']=='month') {
+$doc_totalr_qry = mysqli_query($cn,"select sum(dp.amount) as doc_total_revenue, MONTH(dp.pay_date) as col1, YEAR(dp.pay_date) as col2 from doc_payments dp, doctor_details d where d.doc_id = dp.doc_id group by MONTH(dp.pay_date) order by dp.pay_date desc");
+} else if($_GET['frame']=='day') {
+$doc_totalr_qry = mysqli_query($cn,"select sum(dp.amount) as doc_total_revenue, dp.pay_date as col1 from doc_payments dp, doctor_details d where d.doc_id = dp.doc_id group by dp.pay_date order by dp.pay_date desc");
+} else {
+$doc_totalr_qry = mysqli_query($cn,"select sum(dp.amount) as doc_total_revenue from doc_payments dp, doctor_details d where d.doc_id = dp.doc_id order by dp.pay_date desc");
+}
+echo "select sum(dp.amount) as doc_total_revenue from doc_payments dp, doctor_details d where d.doc_id = dp.doc_id order by dp.pay_date desc" ;
+?>
+    <div class="block full">
+        <div class="table-responsive">
+            <table id="example-datatable" class="table table-striped table-bordered table-vcenter">
+                <thead>
+                    <tr>
+                        <th class="text-center" style="width: 10%;">S.No.</th>
+                        <th class="text-center" style="width:40%;">Timeframe <?php echo ($_GET['frame']) ? '- '.$_GET['frame']: '- All Time';?></th>
+                        <th class="text-right" style="width:50%">Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php $count = 1;
+				if(mysqli_num_rows($doc_totalr_qry)>0) {
+					while($doc_totalr_r = mysqli_fetch_object($doc_totalr_qry)) { ?>
+                    <tr>
+						<td class="text-center"><?php echo $count++;?></td>
+                        <td class="text-center"><?php if ($_GET['frame']=='all' || !$_GET['frame']) { echo 'All Time'; }   else if($_GET['frame']=='year'){ echo $doc_totalr_r->col1; } else if($_GET['frame']=='month') { echo $monthname[$doc_totalr_r->col1].' - '.$doc_totalr_r->col2; } else { echo date('d-M-Y',strtotime($doc_totalr_r->col1)); }?></td>
+                        <td class="text-right"><?php echo curr($doc_totalr_r->doc_total_revenue); ?></td>
+                    </tr>
+                    <?php } } ?>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- END Datatables Block -->
+</div>
+<!-- END Page Content -->
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,211 @@
+<?php if($doclinkid) { 
+   $doc_avatar_dir = "/img/placeholders/avatars/";
+?>
+<div id="page-content">
+    <!-- Forms Components Header -->
+    <div class="content-header">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="header-section">
+                    <h1>Refer Patient - Specialist Details</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Forms Components Header -->
+
+    <!-- Form Components Row -->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Horizontal Form Block -->
+            <div class="block">
+                <!-- General Elements Content -->
+                <div class="form-horizontal form-bordered">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Name</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo $doc_r[0]['doc_firstname'].' '.$doc_r[0]['doc_lastname'];?></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Speciality</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo $doc_r[0]['doc_speciality_detail'];?></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Address</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo $doc_r[0]['doc_address'];?></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Zip</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><?php echo $doc_r[0]['doc_zip'];?></p>
+                        </div>
+                    </div>
+            <?php if($doc_r->doc_avatar) {?>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Avatar</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static"><img src="<?php echo $doc_avatar_dir.$doc_r[0]['doc_avatar'];?>" width="60" height="60" /></p>
+                        </div>
+                    </div>
+            <?php } ?>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Services</label>
+                        <div class="col-md-9">
+                            <p class="form-control-static">
+<?php 
+// get service
+foreach($specialServicesDetails as $specialServicesvalue)
+{
+    echo '<b>'.$specialServicesvalue['service_type'].'</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.$specialServicesvalue['price'].'<br />';
+        for($i=1;$i<=10;$i++) {
+        $servicefield = 'service_name'.$i;
+            if(trim($specialServicesvalue[$servicefield])) {
+                echo stripslashes($specialServicesvalue[$servicefield]).'<br>';
+            }
+        }
+}
+
+?></p>
+        </div>
+    </div>
+
+<form action="/dashboardfront/patientrefer/<?php echo $pat_id ;?>" id="form-referpatients" method="post" class="form-horizontal form-bordered">
+                    
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Comments / Extra Notes</label>
+                        <div class="col-md-6">
+                            <textarea type="text" id="comments" name="comments" class="form-control" placeholder="Comments / Extra Notes" cols="30" rows="3"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-actions">
+                        <div class="col-md-9 col-md-offset-3">
+                            <button type="submit" class="btn btn-effect-ripple btn-primary">Submit</button>
+                            <button type="reset" class="btn btn-effect-ripple btn-danger" onclick="javascript: window.location.assign('/dashboardfront/patientrefer/<?php echo $pat_id;?>')">Cancel</button>
+                        </div>
+                    </div>
+                <input type="hidden" name="pat_id" value="<?php echo $pat_id;?>" />
+                <input type="hidden" name="doc_id" value="<?php echo $doclinkid;?>" />
+                </form>
+    
+
+                <!--<div class="form-horizontal form-bordered">
+                    <div class="form-group form-actions">
+                        <div class="col-md-9 col-md-offset-3">
+                            <a href="patient_referer.php?pat_id=<?php echo $_GET['pat_id'];?>"><button type="submit" class="btn btn-effect-ripple btn-primary">Back</button></a> <button type="submit" class="btn btn-effect-ripple btn-primary" onclick="javascript: window.location.assign('list_patients.php?doc_id=<?php echo $doc_r->doc_id;?>')">List Patients</button>  <button type="submit" class="btn btn-effect-ripple btn-primary" onclick="javascript: window.location.assign('doc_pay_details.php?doc_id=<?php echo $doc_r->doc_id;?>')">Payment Details</button>
+                        </div>
+                    </div>
+                </div>-->
+                <!-- END General Elements Content -->
+            </div>
+        </div>
+    </div>
+    <!-- END Form Components Row -->
+</div>
+<?php } else { ?>
+<!-- Page content -->
+<div id="page-content">
+    <!-- Table Styles Header -->
+    <div class="content-header">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="header-section">
+                    <h1>Refer Patient - Select Specialist</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Table Styles Header -->
+    <!-- Datatables Block -->
+    <!-- Datatables is initialized in js/pages/uiTables.js -->
+    <div class="block full">
+        <div class="table-responsive">
+            <table id="example-datatable" class="table table-striped table-bordered table-vcenter">
+                <tfoot>
+                    <tr>
+				<th>Specialist Name</th>
+				<th>Speciality</th>
+				<th>Address</th>
+				<th>Zipcode</th>
+				<th>Action</th>
+                    </tr>
+                </tfoot>
+                <thead>
+                    <tr>
+                        <th>Specialist Name</th>
+                        <th>Speciality</th>
+                        <th>Address</th>
+                        <th>Zipcode</th>
+                        <th class="text-center" style="width: 75px;"><i class="fa fa-flash"></i></th>
+                    </tr>
+                </thead>
+                <tbody>
+        <?php
+          // get list doctor
+          foreach($spl_r as $spl_rvalue)
+         {
+          ?>
+                    <tr>
+                        <td><?php echo $spl_rvalue['doc_firstname'].' '.$spl_rvalue['doc_lastname']; ?></td>
+                        <td><?php echo $spl_rvalue['doc_speciality_detail']; ?></td>
+                        <td><?php echo $spl_rvalue['doc_address']; ?></td>
+                        <td><?php echo $spl_rvalue['doc_zip']; ?></td>
+                        <td class="text-center">
+              <a href="/dashboardfront/specilistpatientrefer/<?php echo $pat_id;?>/<?php echo $spl_rvalue['doc_id'];?>" data-toggle="tooltip" title="View Details" class="btn btn-effect-ripple btn-xs btn-info"><i class="fa fa-laptop"></i></a>
+                        </td>
+                    </tr>
+                    <?php 
+                    }
+                 ?>
+
+                </tbody>
+ 
+            </table>
+        </div>
+    </div>
+    <!-- END Datatables Block -->
+</div>
+<!-- END Page Content -->
+<?php } ?>
+
+<!-- END Page Content -->
+<!-- Load and execute javascript code used only in this page -->
+<script src="/js/pages/uiTables.js"></script>
+<script>$(function(){ UiTables.init(); });</script>
+<script>$(document).ready(function() {
+	$('#example-datatable_filter').hide();
+    // Setup - add a text input to each footer cell
+    $('#example-datatable tfoot th').each( function () {
+        var title = $(this).text();
+		if(title=='Action' || title=='Address' ) {
+		$(this).html('');	
+		} else {
+        $(this).html( '<input type="search" name="'+title+'" class="form-control" placeholder="Search by '+title+'" />' );
+		}
+    } );
+ 
+    // DataTable
+    var table = $('#example-datatable').DataTable();
+ 
+    // Apply the search
+    table.columns().every( function () {
+        var input = this;
+
+        $( 'input', this.footer() ).on( 'keyup change', function () { 
+            if ( input.search() !== this.value) { 
+                input
+                    .search( this.value )
+                    .draw(); 
+            }
+        } );
+    } );
+} );</script>
+<style>tfoot {
+    display: table-header-group;
+}</style>

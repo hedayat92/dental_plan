@@ -17,7 +17,37 @@ return array(
                 'options' => array(
                     'route'    => '/',
                     'defaults' => array(
-                        'controller' => 'Application\Controller\Index',
+                        'controller' => 'Dashboardfront\Controller\Dashboardfront',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
+             'aboutus' => array(
+                'type' => 'Zend\Mvc\Router\Http\Segment',
+                'options' => array(
+                    'route'    => '/aboutus',
+                    'defaults' => array(
+                        'controller' => 'Dashboardfront\Controller\Dashboardfront',
+                        'action'     => 'aboutus',
+                    ),
+                ),
+            ),
+            'features' => array(
+                'type' => 'Zend\Mvc\Router\Http\Segment',
+                'options' => array(
+                    'route'    => '/features',
+                    'defaults' => array(
+                        'controller' => 'Dashboardfront\Controller\Dashboardfront',
+                        'action'     => 'features',
+                    ),
+                ),
+            ),
+            'admin' => array(
+                'type' => 'Zend\Mvc\Router\Http\Segment',
+                'options' => array(
+                    'route'    => '/admin[/:id]',
+                    'defaults' => array(
+                        'controller' => 'ZF2AuthAcl\Controller\Index',
                         'action'     => 'index',
                     ),
                 ),
@@ -31,7 +61,7 @@ return array(
                 'options' => array(
                     'route'    => '/application',
                     'defaults' => array(
-                        '__NAMESPACE__' => 'Application\Controller',
+                        '__NAMESPACE__' => 'ZF2AuthAcl\Controller',
                         'controller'    => 'Index',
                         'action'        => 'index',
                     ),

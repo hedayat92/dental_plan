@@ -1,0 +1,112 @@
+<?php
+// plan type
+$plan_type[1] = 'Individual';
+$plan_type[2] = 'Family';
+$plan_type[3] = 'Addon';
+// plan cycle
+$plan_billing_cycle[1] = 'Monthly';
+$plan_billing_cycle[2] = 'Annually';
+
+?>
+<!-- Page content -->
+<div id="page-content">
+    <!-- Pricing Tables Header -->
+    <div class="content-header">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="header-section">
+                    <h1>Choose Plan</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Pricing Tables Header -->
+
+    <!-- Normal Pricing Tables Block -->
+    <div class="block">
+
+        <!-- Normal Pricing Tables Content -->
+        <div class="row">
+<?php // plan query
+foreach($listplanservice as  $listplanservicevalue) {
+?>
+            <div class="col-sm-3">
+                <table class="table table-borderless table-pricing">
+                    <thead>
+                        <tr>
+                            <th><?php echo $listplanservicevalue['plan_name'];?><br /><small><?php echo $listplanservicevalue['heading_line'];?></small></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="active">
+                            <td>
+<table width="100%" border="0">
+  <tr>
+    <td colspan="2"><?php echo $plan_type[1];?></td>
+  </tr>
+  <tr>
+    <td><?php if($listplanservicevalue['plan_monthly_price']) { ?>
+<strong><?php echo $listplanservicevalue['plan_monthly_price'];?></strong><br><small><?php echo $plan_billing_cycle[1];?></small>
+<?php } ?>
+</td>
+    <td><?php if($listplanservicevalue['plan_yearly_price']) { ?>
+<strong><?php echo $listplanservicevalue['plan_yearly_price'];?></strong><br><small><?php echo $plan_billing_cycle[2];?></small>
+<?php } ?></td>
+  </tr>
+  <tr>
+    <td colspan="2"><?php echo $plan_type[3];?></td>
+  </tr>
+  <tr>
+    <td><?php if($listplanservicevalue['addon_monthly_price']) { ?>
+<strong><?php echo $listplanservicevalue['addon_monthly_price'];?></strong><br><small><?php echo $plan_billing_cycle[1];?></small>
+<?php } ?>
+</td>
+    <td><?php if($listplanservicevalue['addon_monthly_price']) { ?>
+<strong><?php echo $listplanservicevalue['addon_yearly_price'];?></strong><br><small><?php echo $plan_billing_cycle[2];?></small>
+<?php } ?></td>
+  </tr>
+</table>
+
+                                <!--<h1>-->
+
+<!--</h1>-->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="left"> 
+
+        <?php 
+        // get service plans
+        foreach($planservicedetails as $planservicedetailsvalue) {
+         if($listplanservicevalue['plan_id']==$planservicedetailsvalue['plan_id']){
+
+
+
+        echo '<b>'.$planservicedetailsvalue['service_type'].'</b><br />';
+        for($i=1;$i<=10;$i++) {
+        $servicefield = 'service_name'.$i;
+            if(trim($planservicedetailsvalue['service_name'.$i])) {
+                echo stripslashes($planservicedetailsvalue['service_name'.$i]).'<br>';
+            }
+        }
+        echo '<i>'.stripslashes($planservicedetailsvalue['service_notes']).'</i><br>';
+    }
+}?></td>
+                        </tr>
+                        <tr class="active">
+                    <td>
+                    <a href="/dashboardfront/patientedit/<?php echo $listplanservicevalue['plan_id'];?>" class="btn btn-effect-ripple  btn-success"><i class="fa fa-arrow-right"></i> Sign Up Today</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+<?php } ?>
+            
+        </div>
+        <!-- END Normal Pricing Tables Content -->
+    </div>
+    <!-- END Normal Pricing Tables Block -->
+</div>
+<!-- END Page Content -->
+

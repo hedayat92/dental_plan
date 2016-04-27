@@ -1,0 +1,218 @@
+<?php
+function curr($amt) {
+	return '$'.number_format($amt, 2, '.', '');
+}
+$flashMessage = $this->flashMessenger()->getMessages();
+if (count($flashMessage)) {
+     echo '<div style="width:100%;height:60px;padding-top:20px;font-family:calibri;font-size:14px;">';
+ ?>
+<?php
+    foreach ($flashMessage as $msg){
+        foreach ($msg as $type => $message) {
+               echo $message ;
+           }
+         }
+    echo '</div>';     
+     }
+ // print_r($doctordetails);
+
+/*
+Array
+(
+    [0] => Array
+        (
+            [doc_id] => 6
+            [doc_firstname] => 
+            [doc_lastname] => 
+            [doc_sex] => 
+            [doc_speciality] => 
+            [doc_speciality_detail] => 
+            [doc_address] => 
+            [doc_zip] => 
+            [doc_phone] => 
+            [doc_phone2] => 
+            [doc_email] => 
+            [doc_contact_person] => 
+            [doc_license_no] => 
+            [doc_username] => jtujtyj
+            [doc_pass] => d41d8cd98f00b204e9800998ecf8427e
+            [doc_status] => 0
+            [doc_avatar] => 
+            [add_date] => 2016-02-04
+            [bank_routing_number] => 
+            [bank_account_number] => 
+            [account_id] => 
+            [bank_acc_id] => 
+            [bank_account_type] => 
+            [legal_name] => 
+            [cc_number] => 
+            [cc_month] => 
+            [cc_year] => 
+            [cust_id] => 
+            [subs_id] => 
+            [plan_token_id] => 
+            [subs_cancel_dt] => 0000-00-00
+        )
+
+)
+
+           Array
+(
+    [0] => Array
+        (
+            [span] => 09-12-2015 - 09-01-2016
+            [chkpayout] => Array
+                (
+                    [0] => Array
+                        (
+                            [amt] => 580.0000
+                        )
+
+                )
+
+            [spanamt] => Array
+                (
+                    [0] => Array
+                        (
+                            [amt] => 580.0000
+                        )
+
+                )
+
+        )
+
+    [1] => Array
+        (
+            [span] => 09-01-2016 - 09-02-2016
+            [chkpayout] => Array
+                (
+                )
+
+            [spanamt] => Array
+                (
+                )
+
+        )
+
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+*/
+//print_r($docpayoutdetail);
+$doc_fee = 300;
+ ?>
+
+<!-- Page content -->
+<div id="page-content">
+    <!-- Table Styles Header -->
+    <div class="content-header">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="header-section">
+                    <h1>Payout for <?php echo "- ". $doctordetails[0]['doc_firstname'].' '.
+                     $doctordetails[0]['doc_lastname'];?></h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Table Styles Header -->
+    <!-- Datatables Block -->
+    <div class="block full">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-vcenter">
+                <thead>
+                    <tr>
+                        <th class="text-center" style="width: 30%;">Time Span</th>
+                        <th class="text-right" style="width:40%;">Amount <small>(Income - Commission(10% above <?=$doc_fee*10?>) = Payout)</small></th>
+                        <th class="text-center" style="width:30%">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+<?php
+
+//$doc_details = getdocdetails($_GET['doc_id']);
+//print_r($doc_details);
+//$reg_dt=$doctordetails[0]['add_date'];
+$i=0;
+foreach($docpayoutdetail as $docpayoutdetailvalue ){
+   // print_r($docpayoutdetailvalue);
+       
+$span = date('d-m-Y',strtotime($st_dt))." - ".date('d-m-Y',strtotime($en_dt));
+
+
+         
+
+      //  $chkpayout = paidpayout($st_dt,$en_dt,$_GET['doc_id']);
+    /*
+$en_dt = date('Y-m-d',strtotime("+1 month",strtotime($st_dt)));
+$span = date('d-m-Y',strtotime($st_dt))." - ".date('d-m-Y',strtotime($en_dt));
+*/
+$paidpayoutdetail=  $docpayoutdetailvalue['chkpayout'] ;
+    if(!$paidpayoutdetail[$i]['amt']){
+        $chkpayout = 0;
+    }else{
+        $chkpayout =$paidpayoutdetail[$i]['amt'] ;
+    }
+
+
+
+
+
+
+
+
+
+$spanamountdetail=  $docpayoutdetailvalue['spanamt'] ;
+  if(!$paidpayoutdetail[$i]['amt']){
+        $spanamt = 0;
+    }else{
+        $spanamt =$paidpayoutdetail[$i]['amt'] ;
+    }
+
+
+
+if($spanamt>($doc_fee*10)) {
+	$span_amt = $spanamt-($spanamt/10);	
+	$show_span_amt = curr($spanamt)." - ".curr($spanamt/10)." = ".curr($span_amt);
+} else {
+	$span_amt = $spanamt;
+	$show_span_amt = curr($spanamt)." - ".curr(0)." = ".curr($span_amt);
+}
+
+?>
+          <tr>
+            <td class="text-center"><?php echo $docpayoutdetailvalue['span'];?></td>
+            <td class="text-right"><?php echo $show_span_amt;?></td>
+            <td class="text-center"><?php if($chkpayout) { echo "Paid"; } else if($span_amt>0) { ?> <button type="submit" class="btn btn-effect-ripple btn-primary" onclick="javascript: window.location.assign('doc_payout_details.php?doc_id=<?php echo $_GET['doc_id'];?>&action=payout&payout_st=<?=$st_dt?>&payout_en=<?=$en_dt?>')">Payout</button><?php } else {  echo "--"; } ?></td>
+          </tr>
+<?php 
+
+
+$st_dt = $en_dt;
+} 
+?>
+                </tbody>
+            </table>
+        </div>
+  <div><button type="submit" class="btn btn-effect-ripple btn-primary" onclick="javascript: window.location.assign('<?php echo $this->url('dashboard',array('action'=>'doctordetailsgrid','id'=>$doctorid)) ;?>')">Back</button></div>
+    </div>
+    <!-- END Datatables Block -->
+</div>
+<!-- END Page Content -->

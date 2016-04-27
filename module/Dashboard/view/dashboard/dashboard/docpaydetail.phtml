@@ -1,0 +1,143 @@
+<?php
+$flashMessage = $this->flashMessenger()->getMessages();
+if (count($flashMessage)) {
+     echo '<div style="width:100%;height:60px;padding-top:26px;font-family:calibri;font-size:14px;">';
+ ?>
+<?php
+    foreach ($flashMessage as $msg){
+        foreach ($msg as $type => $message) {
+               echo $message ;
+           }
+         }
+    echo '</div>';    
+     }
+$doc_avatar_dir = "/img/placeholders/avatars/";
+
+
+
+
+
+
+//print_r($doctorgrid[0]);
+
+ /*          Array
+(
+    [doc_id] => 2
+    [doc_firstname] => Dr. Doug
+    [doc_lastname] => Barker
+    [doc_sex] => 1
+    [doc_speciality] => 1
+    [doc_speciality_detail] => 
+    [doc_address] => 400 Newport Center Drive. Suite 408
+    [doc_zip] => 92660
+    [doc_phone] => 9496440922
+    [doc_phone2] => 
+    [doc_email] => drdougbarker@dmd.occoxmail.com
+    [doc_contact_person] => Dr. Doug Barker
+    [doc_license_no] => 123456
+    [doc_username] => dougbarkerdmd
+    [doc_pass] => e10adc3949ba59abbe56e057f20f883e
+    [doc_status] => 1
+    [doc_avatar] => avatar2.39.26.png
+    [add_date] => 2015-12-09
+    [bank_routing_number] => c0zFQMjSZizRueBPaD3GiaIVTLVowny3sIh3rMXzmaU=
+    [bank_account_number] => WWIR7UDPw1vZ+HUAmcLzJzaZGmUx2DcfD3XZj7GQBgU=
+    [account_id] => d1YgHtbFIfpB3UjK4ujSZY5tEWuMzxlUp7sYWiZodao=
+    [bank_acc_id] => 
+    [bank_account_type] => individual
+    [legal_name] => K. Douglas Barker, DMD Inc. 
+    [cc_number] => hKypKTbhEtywGYytunYcl+gPMidfHkq+axYuxH5Y65c=
+    [cc_month] => 10
+    [cc_year] => 2017
+    [cust_id] => siwQA81a+9Yh3TI/sRYTXxJU9zVlFYqF0TbGeK3/7oc=
+    [subs_id] => GwsnbysGjR+ZGYxCk/6DEVBbm2qq+Di5mpEuIMgsMlE=
+    [plan_token_id] => 
+    [subs_cancel_dt] => 0000-00-00
+)
+
+*/
+
+
+ ?>
+<!-- Page content -->
+<div id="page-content">
+    <!-- Table Styles Header -->
+    <div class="content-header">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="header-section">
+                    <h1>Total Revenue <?php echo "- ". $doctorgrid[0]['doc_firstname'].' '.$doctorgrid[0]['doc_lastname'];?></h1>
+                </div>
+            </div>
+            <div class="col-sm-6 hidden-xs">
+                <div class="header-section">
+                 <ul class="breadcrumb breadcrumb-top">
+                    <li><a data-original-title="All Time" style="overflow: hidden; position: relative;" title="" data-placement="left" data-toggle="tooltip" class="btn btn-effect-ripple btn-primary" href="<?php echo $this->url('dashboard',array('action'=>'docpaydetail','id'=>$doctorgrid[0]['doc_id'])) ; ?>
+                        ">All Time</a></li>
+                        <li><a data-original-title="All Time" style="overflow: hidden; position: relative;" title="" data-placement="left" data-toggle="tooltip" class="btn btn-effect-ripple btn-primary" href="<?php echo $this->url('dashboard',array('action'=>'docpaydetail','id'=>$doctorgrid[0]['doc_id'],'idd'=>'1')) ; ?>
+                        ">Per Year</a></li>
+                        <li><a data-original-title="All Time" style="overflow: hidden; position: relative;" title="" data-placement="left" data-toggle="tooltip" class="btn btn-effect-ripple btn-primary" href="<?php echo $this->url('dashboard',array('action'=>'docpaydetail','id'=>$doctorgrid[0]['doc_id'],'idd'=>'2')) ; ?>
+                        ">Per Month</a></li>
+                        <li><a data-original-title="All Time" style="overflow: hidden; position: relative;" title="" data-placement="left" data-toggle="tooltip" class="btn btn-effect-ripple btn-primary" href="<?php echo $this->url('dashboard',array('action'=>'docpaydetail','id'=>$doctorgrid[0]['doc_id'],'idd'=>'3')) ; ?>">Per Day</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Table Styles Header -->
+    <!-- Datatables Block -->
+<?php
+if($_GET['frame']=='year') {
+$pat_totalr_qry = mysqli_query($cn,"select sum(pp.amount) as pat_total_revenue, YEAR(pp.pay_date) as col1 from patients_payments pp, patients p where p.patient_id = pp.patient_id and p.doc_id=".mysqli_real_escape_string($cn,$_GET['doc_id'])." group by YEAR(pp.pay_date) order by pp.pay_date desc");
+} else if($_GET['frame']=='month') {
+$pat_totalr_qry = mysqli_query($cn,"select sum(pp.amount) as pat_total_revenue, MONTH(pp.pay_date) as col1, YEAR(pp.pay_date) as col2 from patients_payments pp, patients p where p.patient_id = pp.patient_id and p.doc_id=".mysqli_real_escape_string($cn,$_GET['doc_id'])." group by MONTH(pp.pay_date) order by pp.pay_date desc");
+} else if($_GET['frame']=='day') {
+$pat_totalr_qry = mysqli_query($cn,"select sum(pp.amount) as pat_total_revenue, pp.pay_date as col1 from patients_payments pp, patients p where p.patient_id = pp.patient_id and p.doc_id=".mysqli_real_escape_string($cn,$_GET['doc_id'])." group by pp.pay_date order by pp.pay_date desc");
+} else {
+$pat_totalr_qry = mysqli_query($cn,"select sum(pp.amount) as pat_total_revenue from patients_payments pp, patients p where p.patient_id = pp.patient_id and p.doc_id=".mysqli_real_escape_string($cn,$_GET['doc_id'])." order by pp.pay_date desc");
+}
+?>
+    <div class="block full">
+        <div class="table-responsive">
+            <table id="example-datatable" class="table table-striped table-bordered table-vcenter">
+                <thead>
+                    <tr>
+                        <th class="text-center" style="width: 10%;">S.No.</th>
+                        <th class="text-center" style="width:40%;">Timeframe <?php if($frameid=='1'){echo 'year';}else if($frameid=='2'){ echo 'month';}else if($frameid=='3'){ echo 'day';}else{ echo 'All';}?></th>
+                        <th class="text-right" style="width:50%">Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php $count = 1;
+                     $monthname[1] = 'Jan';
+                     $monthname[2] = 'Feb';
+                     $monthname[3] = 'Mar';
+                     $monthname[4] = 'Apr';
+                     $monthname[5] = 'May';
+                     $monthname[6] = 'Jun';
+                     $monthname[7] = 'Jul';
+                     $monthname[8] = 'Aug';
+                     $monthname[9] = 'Sep';
+                     $monthname[10] = 'Oct';
+                     $monthname[11] = 'Nov';
+                     $monthname[12] = 'Dec';
+                    foreach($paymentreports as  $paymentreportsval) {
+                        ?>
+                    <tr>
+                        <td class="text-center"><?php echo $count++;?></td>
+                        <td class="text-center"><?php if($frameid=='1'){echo $paymentreportsval['col1'];}else if($frameid=='2'){ echo  $monthname[$paymentreportsval['col1']].' - '.$paymentreportsval['col2'];}else if($frameid=='3'){ echo date('m-d-Y',strtotime($paymentreportsval['col1']));;}else{ echo 'All';}?></td>
+                        <td class="text-right"><?php echo  $paymentreportsval['pat_total_revenue'];  ?></td>
+                    </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+        </div>
+    <div><button type="submit" class="btn btn-effect-ripple btn-primary" onclick="javascript: window.location.assign('doctor_details_grid.php?doc_id=<?php echo $_GET['doc_id'];?>')">Back</button></div>
+    </div>
+    <!-- END Datatables Block -->
+</div>
+<!-- END Page Content -->
+<!-- Load and execute javascript code used only in this page -->
+<script src="/js/pages/uiTables.js"></script>
+<script>$(function(){ UiTables.init(); });</script>
+<script type="text/javascript">$.fn.dataTable.ext.errMode = 'none';</script>
